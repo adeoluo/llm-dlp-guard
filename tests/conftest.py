@@ -8,6 +8,7 @@ import pytest
 
 from llm_dlp_guard.backend import rust_available
 from llm_dlp_guard.detector import Tagger
+from llm_dlp_guard.guard import Guard
 
 if os.environ.get("DLP_REQUIRE_RUST") == "1" and not rust_available():  # pragma: no cover
     raise RuntimeError("DLP_REQUIRE_RUST=1 but the Rust extension is not importable")
@@ -101,3 +102,8 @@ def tagger_path(tmp_path_factory: pytest.TempPathFactory) -> Path:
     path = tmp_path_factory.mktemp("model") / "tagger.crf"
     tagger.save(path)
     return path
+
+
+@pytest.fixture(scope="session")
+def guard() -> Guard:
+    return Guard()
