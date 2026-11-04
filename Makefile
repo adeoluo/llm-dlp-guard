@@ -45,7 +45,7 @@ bench-compare: ## Presidio comparison on ai4privacy (English) and Nemotron-PII (
 	uv sync --group validation && uv run --no-sync python benchmarks/presidio_compare.py
 
 bench-secrets: ## Secrets corpus: this package vs detect-secrets
-	uv sync --group validation && uv run --no-sync python benchmarks/secrets.py
+	uv sync --group validation && uv run --no-sync python benchmarks/secrets_detection.py
 
 bench-throughput: ## Throughput in MB/s for every engine
 	uv sync --group validation && uv run --no-sync python benchmarks/throughput.py

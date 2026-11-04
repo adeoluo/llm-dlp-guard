@@ -3,8 +3,9 @@
 * ai4privacy/pii-masking-400k: 406,896 synthetic texts in six languages with 17 PII labels
   (train 325,517, validation 81,379). Academic, non-commercial licence: download it yourself
   with ``scripts/download_data.sh``; it is never redistributed here.
-* nvidia/Nemotron-PII: 100,000 synthetic English documents with 55 labels (CC BY 4.0); the test
-  split is used for cross-dataset evaluation only.
+* nvidia/Nemotron-PII: synthetic English documents with 55 labels (CC BY 4.0); the test split
+  (100,000 documents: 50,000 personas in a US and an international version) is used for
+  cross-dataset evaluation only.
 """
 
 from __future__ import annotations
@@ -204,7 +205,7 @@ def load_ai4privacy(
 
 
 def load_nemotron(path: str | Path, limit: int | None = None) -> Iterator[Record]:
-    """Unique documents of a Nemotron-PII parquet split, spans in coarse types."""
+    """Documents of a Nemotron-PII split (exact duplicates skipped), spans in coarse types."""
 
     import pyarrow.parquet as pq
 

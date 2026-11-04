@@ -1,0 +1,826 @@
+{
+  "machine": {
+    "platform": "macOS-27.0.1-arm64-arm-64bit",
+    "processor": "Apple M1",
+    "cpus": 8,
+    "python": "3.12.14"
+  },
+  "written": "2026-11-04 11:18:11",
+  "dataset": "ai4privacy/pii-masking-400k",
+  "train_records": 325517,
+  "validation_records": 81379,
+  "validation_entities": 88810,
+  "validation_characters": 12142865,
+  "grid": [
+    {
+      "learning_rate": 0.05,
+      "epochs": 3,
+      "dev_micro_f1": 0.8675,
+      "train_seconds": 129.5
+    },
+    {
+      "learning_rate": 0.1,
+      "epochs": 3,
+      "dev_micro_f1": 0.8801,
+      "train_seconds": 99.0
+    },
+    {
+      "learning_rate": 0.2,
+      "epochs": 3,
+      "dev_micro_f1": 0.8827,
+      "train_seconds": 98.4
+    },
+    {
+      "learning_rate": 0.05,
+      "epochs": 6,
+      "dev_micro_f1": 0.8775,
+      "train_seconds": 189.8
+    },
+    {
+      "learning_rate": 0.1,
+      "epochs": 6,
+      "dev_micro_f1": 0.8842,
+      "train_seconds": 286.4
+    }
+  ],
+  "chosen": {
+    "learning_rate": 0.1,
+    "epochs": 6,
+    "bucket_bits": 21
+  },
+  "ner_min_score": 0.5,
+  "train_seconds": 229.1,
+  "model_bytes": 243623530,
+  "peak_rss_mb": 317.0,
+  "results": {
+    "tagger": {
+      "micro": {
+        "tp": 74677,
+        "fp": 5844,
+        "fn": 14133,
+        "precision": 0.9274,
+        "recall": 0.8409,
+        "f1": 0.882
+      },
+      "macro_f1": 0.8769,
+      "labels": {
+        "ACCOUNT_NUMBER": {
+          "tp": 2694,
+          "fp": 367,
+          "fn": 1288,
+          "precision": 0.8801,
+          "recall": 0.6765,
+          "f1": 0.765,
+          "support": 3982
+        },
+        "BUILDING_NUMBER": {
+          "tp": 2525,
+          "fp": 244,
+          "fn": 1074,
+          "precision": 0.9119,
+          "recall": 0.7016,
+          "f1": 0.793,
+          "support": 3599
+        },
+        "CITY": {
+          "tp": 7246,
+          "fp": 295,
+          "fn": 832,
+          "precision": 0.9609,
+          "recall": 0.897,
+          "f1": 0.9278,
+          "support": 8078
+        },
+        "CREDIT_CARD": {
+          "tp": 2235,
+          "fp": 192,
+          "fn": 332,
+          "precision": 0.9209,
+          "recall": 0.8707,
+          "f1": 0.8951,
+          "support": 2567
+        },
+        "DATE_OF_BIRTH": {
+          "tp": 2830,
+          "fp": 387,
+          "fn": 931,
+          "precision": 0.8797,
+          "recall": 0.7525,
+          "f1": 0.8111,
+          "support": 3761
+        },
+        "DRIVER_LICENSE": {
+          "tp": 1985,
+          "fp": 66,
+          "fn": 498,
+          "precision": 0.9678,
+          "recall": 0.7994,
+          "f1": 0.8756,
+          "support": 2483
+        },
+        "EMAIL": {
+          "tp": 7695,
+          "fp": 32,
+          "fn": 26,
+          "precision": 0.9959,
+          "recall": 0.9966,
+          "f1": 0.9962,
+          "support": 7721
+        },
+        "GIVEN_NAME": {
+          "tp": 11292,
+          "fp": 1621,
+          "fn": 2205,
+          "precision": 0.8745,
+          "recall": 0.8366,
+          "f1": 0.8551,
+          "support": 13497
+        },
+        "ID_CARD": {
+          "tp": 3308,
+          "fp": 402,
+          "fn": 813,
+          "precision": 0.8916,
+          "recall": 0.8027,
+          "f1": 0.8448,
+          "support": 4121
+        },
+        "PASSWORD": {
+          "tp": 2415,
+          "fp": 150,
+          "fn": 226,
+          "precision": 0.9415,
+          "recall": 0.9144,
+          "f1": 0.9278,
+          "support": 2641
+        },
+        "PHONE": {
+          "tp": 5362,
+          "fp": 350,
+          "fn": 320,
+          "precision": 0.9387,
+          "recall": 0.9437,
+          "f1": 0.9412,
+          "support": 5682
+        },
+        "SOCIAL_NUMBER": {
+          "tp": 2467,
+          "fp": 167,
+          "fn": 571,
+          "precision": 0.9366,
+          "recall": 0.812,
+          "f1": 0.8699,
+          "support": 3038
+        },
+        "STREET": {
+          "tp": 3326,
+          "fp": 126,
+          "fn": 388,
+          "precision": 0.9635,
+          "recall": 0.8955,
+          "f1": 0.9283,
+          "support": 3714
+        },
+        "SURNAME": {
+          "tp": 5984,
+          "fp": 960,
+          "fn": 3209,
+          "precision": 0.8618,
+          "recall": 0.6509,
+          "f1": 0.7416,
+          "support": 9193
+        },
+        "TAX_NUMBER": {
+          "tp": 2076,
+          "fp": 160,
+          "fn": 533,
+          "precision": 0.9284,
+          "recall": 0.7957,
+          "f1": 0.857,
+          "support": 2609
+        },
+        "USERNAME": {
+          "tp": 8044,
+          "fp": 83,
+          "fn": 522,
+          "precision": 0.9898,
+          "recall": 0.9391,
+          "f1": 0.9638,
+          "support": 8566
+        },
+        "ZIP_CODE": {
+          "tp": 3193,
+          "fp": 242,
+          "fn": 365,
+          "precision": 0.9295,
+          "recall": 0.8974,
+          "f1": 0.9132,
+          "support": 3558
+        }
+      },
+      "languages": {
+        "de": {
+          "tp": 14921,
+          "fp": 1129,
+          "fn": 2685,
+          "precision": 0.9297,
+          "recall": 0.8475,
+          "f1": 0.8867
+        },
+        "en": {
+          "tp": 15970,
+          "fp": 1626,
+          "fn": 4229,
+          "precision": 0.9076,
+          "recall": 0.7906,
+          "f1": 0.8451
+        },
+        "es": {
+          "tp": 7924,
+          "fp": 539,
+          "fn": 1135,
+          "precision": 0.9363,
+          "recall": 0.8747,
+          "f1": 0.9045
+        },
+        "fr": {
+          "tp": 15065,
+          "fp": 1007,
+          "fn": 2180,
+          "precision": 0.9373,
+          "recall": 0.8736,
+          "f1": 0.9043
+        },
+        "it": {
+          "tp": 14045,
+          "fp": 947,
+          "fn": 2079,
+          "precision": 0.9368,
+          "recall": 0.8711,
+          "f1": 0.9028
+        },
+        "nl": {
+          "tp": 6752,
+          "fp": 596,
+          "fn": 1825,
+          "precision": 0.9189,
+          "recall": 0.7872,
+          "f1": 0.848
+        }
+      },
+      "seconds": 11.7
+    },
+    "tagger_no_floor": {
+      "micro": {
+        "tp": 76598,
+        "fp": 7657,
+        "fn": 12212,
+        "precision": 0.9091,
+        "recall": 0.8625,
+        "f1": 0.8852
+      },
+      "macro_f1": 0.8802,
+      "labels": {
+        "ACCOUNT_NUMBER": {
+          "tp": 2836,
+          "fp": 599,
+          "fn": 1146,
+          "precision": 0.8256,
+          "recall": 0.7122,
+          "f1": 0.7647,
+          "support": 3982
+        },
+        "BUILDING_NUMBER": {
+          "tp": 2567,
+          "fp": 276,
+          "fn": 1032,
+          "precision": 0.9029,
+          "recall": 0.7133,
+          "f1": 0.797,
+          "support": 3599
+        },
+        "CITY": {
+          "tp": 7433,
+          "fp": 439,
+          "fn": 645,
+          "precision": 0.9442,
+          "recall": 0.9202,
+          "f1": 0.932,
+          "support": 8078
+        },
+        "CREDIT_CARD": {
+          "tp": 2342,
+          "fp": 274,
+          "fn": 225,
+          "precision": 0.8953,
+          "recall": 0.9123,
+          "f1": 0.9037,
+          "support": 2567
+        },
+        "DATE_OF_BIRTH": {
+          "tp": 2833,
+          "fp": 389,
+          "fn": 928,
+          "precision": 0.8793,
+          "recall": 0.7533,
+          "f1": 0.8114,
+          "support": 3761
+        },
+        "DRIVER_LICENSE": {
+          "tp": 2098,
+          "fp": 179,
+          "fn": 385,
+          "precision": 0.9214,
+          "recall": 0.8449,
+          "f1": 0.8815,
+          "support": 2483
+        },
+        "EMAIL": {
+          "tp": 7695,
+          "fp": 34,
+          "fn": 26,
+          "precision": 0.9956,
+          "recall": 0.9966,
+          "f1": 0.9961,
+          "support": 7721
+        },
+        "GIVEN_NAME": {
+          "tp": 11730,
+          "fp": 1983,
+          "fn": 1767,
+          "precision": 0.8554,
+          "recall": 0.8691,
+          "f1": 0.8622,
+          "support": 13497
+        },
+        "ID_CARD": {
+          "tp": 3462,
+          "fp": 613,
+          "fn": 659,
+          "precision": 0.8496,
+          "recall": 0.8401,
+          "f1": 0.8448,
+          "support": 4121
+        },
+        "PASSWORD": {
+          "tp": 2419,
+          "fp": 151,
+          "fn": 222,
+          "precision": 0.9412,
+          "recall": 0.9159,
+          "f1": 0.9284,
+          "support": 2641
+        },
+        "PHONE": {
+          "tp": 5372,
+          "fp": 361,
+          "fn": 310,
+          "precision": 0.937,
+          "recall": 0.9454,
+          "f1": 0.9412,
+          "support": 5682
+        },
+        "SOCIAL_NUMBER": {
+          "tp": 2561,
+          "fp": 273,
+          "fn": 477,
+          "precision": 0.9037,
+          "recall": 0.843,
+          "f1": 0.8723,
+          "support": 3038
+        },
+        "STREET": {
+          "tp": 3382,
+          "fp": 158,
+          "fn": 332,
+          "precision": 0.9554,
+          "recall": 0.9106,
+          "f1": 0.9325,
+          "support": 3714
+        },
+        "SURNAME": {
+          "tp": 6427,
+          "fp": 1308,
+          "fn": 2766,
+          "precision": 0.8309,
+          "recall": 0.6991,
+          "f1": 0.7593,
+          "support": 9193
+        },
+        "TAX_NUMBER": {
+          "tp": 2141,
+          "fp": 242,
+          "fn": 468,
+          "precision": 0.8984,
+          "recall": 0.8206,
+          "f1": 0.8578,
+          "support": 2609
+        },
+        "USERNAME": {
+          "tp": 8059,
+          "fp": 88,
+          "fn": 507,
+          "precision": 0.9892,
+          "recall": 0.9408,
+          "f1": 0.9644,
+          "support": 8566
+        },
+        "ZIP_CODE": {
+          "tp": 3241,
+          "fp": 290,
+          "fn": 317,
+          "precision": 0.9179,
+          "recall": 0.9109,
+          "f1": 0.9144,
+          "support": 3558
+        }
+      },
+      "languages": {
+        "de": {
+          "tp": 15242,
+          "fp": 1412,
+          "fn": 2364,
+          "precision": 0.9152,
+          "recall": 0.8657,
+          "f1": 0.8898
+        },
+        "en": {
+          "tp": 16526,
+          "fp": 2237,
+          "fn": 3673,
+          "precision": 0.8808,
+          "recall": 0.8182,
+          "f1": 0.8483
+        },
+        "es": {
+          "tp": 8072,
+          "fp": 669,
+          "fn": 987,
+          "precision": 0.9235,
+          "recall": 0.891,
+          "f1": 0.907
+        },
+        "fr": {
+          "tp": 15372,
+          "fp": 1257,
+          "fn": 1873,
+          "precision": 0.9244,
+          "recall": 0.8914,
+          "f1": 0.9076
+        },
+        "it": {
+          "tp": 14377,
+          "fp": 1211,
+          "fn": 1747,
+          "precision": 0.9223,
+          "recall": 0.8917,
+          "f1": 0.9067
+        },
+        "nl": {
+          "tp": 7009,
+          "fp": 871,
+          "fn": 1568,
+          "precision": 0.8895,
+          "recall": 0.8172,
+          "f1": 0.8518
+        }
+      },
+      "seconds": 28.7
+    },
+    "patterns": {
+      "micro": {
+        "tp": 10997,
+        "fp": 2285,
+        "fn": 14634,
+        "precision": 0.828,
+        "recall": 0.4291,
+        "f1": 0.5652
+      },
+      "macro_f1": 0.323,
+      "labels": {
+        "ACCOUNT_NUMBER": {
+          "tp": 0,
+          "fp": 11,
+          "fn": 3982,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3982
+        },
+        "CREDIT_CARD": {
+          "tp": 242,
+          "fp": 1244,
+          "fn": 2325,
+          "precision": 0.1629,
+          "recall": 0.0943,
+          "f1": 0.1194,
+          "support": 2567
+        },
+        "EMAIL": {
+          "tp": 7297,
+          "fp": 127,
+          "fn": 424,
+          "precision": 0.9829,
+          "recall": 0.9451,
+          "f1": 0.9636,
+          "support": 7721
+        },
+        "PASSWORD": {
+          "tp": 56,
+          "fp": 135,
+          "fn": 2585,
+          "precision": 0.2932,
+          "recall": 0.0212,
+          "f1": 0.0395,
+          "support": 2641
+        },
+        "PHONE": {
+          "tp": 3149,
+          "fp": 562,
+          "fn": 2533,
+          "precision": 0.8486,
+          "recall": 0.5542,
+          "f1": 0.6705,
+          "support": 5682
+        },
+        "SOCIAL_NUMBER": {
+          "tp": 253,
+          "fp": 206,
+          "fn": 2785,
+          "precision": 0.5512,
+          "recall": 0.0833,
+          "f1": 0.1447,
+          "support": 3038
+        }
+      },
+      "languages": {
+        "de": {
+          "tp": 2282,
+          "fp": 338,
+          "fn": 3102,
+          "precision": 0.871,
+          "recall": 0.4238,
+          "f1": 0.5702
+        },
+        "en": {
+          "tp": 2537,
+          "fp": 859,
+          "fn": 3073,
+          "precision": 0.7471,
+          "recall": 0.4522,
+          "f1": 0.5634
+        },
+        "es": {
+          "tp": 1161,
+          "fp": 179,
+          "fn": 1569,
+          "precision": 0.8664,
+          "recall": 0.4253,
+          "f1": 0.5705
+        },
+        "fr": {
+          "tp": 1943,
+          "fp": 354,
+          "fn": 2753,
+          "precision": 0.8459,
+          "recall": 0.4138,
+          "f1": 0.5557
+        },
+        "it": {
+          "tp": 1990,
+          "fp": 380,
+          "fn": 2800,
+          "precision": 0.8397,
+          "recall": 0.4154,
+          "f1": 0.5559
+        },
+        "nl": {
+          "tp": 1084,
+          "fp": 175,
+          "fn": 1337,
+          "precision": 0.861,
+          "recall": 0.4477,
+          "f1": 0.5891
+        }
+      },
+      "seconds": 3.2
+    },
+    "combined": {
+      "micro": {
+        "tp": 74664,
+        "fp": 7185,
+        "fn": 14146,
+        "precision": 0.9122,
+        "recall": 0.8407,
+        "f1": 0.875
+      },
+      "macro_f1": 0.8657,
+      "labels": {
+        "ACCOUNT_NUMBER": {
+          "tp": 2686,
+          "fp": 371,
+          "fn": 1296,
+          "precision": 0.8786,
+          "recall": 0.6745,
+          "f1": 0.7632,
+          "support": 3982
+        },
+        "BUILDING_NUMBER": {
+          "tp": 2525,
+          "fp": 243,
+          "fn": 1074,
+          "precision": 0.9122,
+          "recall": 0.7016,
+          "f1": 0.7932,
+          "support": 3599
+        },
+        "CITY": {
+          "tp": 7245,
+          "fp": 295,
+          "fn": 833,
+          "precision": 0.9609,
+          "recall": 0.8969,
+          "f1": 0.9278,
+          "support": 8078
+        },
+        "CREDIT_CARD": {
+          "tp": 2271,
+          "fp": 1388,
+          "fn": 296,
+          "precision": 0.6207,
+          "recall": 0.8847,
+          "f1": 0.7295,
+          "support": 2567
+        },
+        "DATE_OF_BIRTH": {
+          "tp": 2830,
+          "fp": 387,
+          "fn": 931,
+          "precision": 0.8797,
+          "recall": 0.7525,
+          "f1": 0.8111,
+          "support": 3761
+        },
+        "DRIVER_LICENSE": {
+          "tp": 1985,
+          "fp": 66,
+          "fn": 498,
+          "precision": 0.9678,
+          "recall": 0.7994,
+          "f1": 0.8756,
+          "support": 2483
+        },
+        "EMAIL": {
+          "tp": 7693,
+          "fp": 40,
+          "fn": 28,
+          "precision": 0.9948,
+          "recall": 0.9964,
+          "f1": 0.9956,
+          "support": 7721
+        },
+        "GIVEN_NAME": {
+          "tp": 11291,
+          "fp": 1621,
+          "fn": 2206,
+          "precision": 0.8745,
+          "recall": 0.8366,
+          "f1": 0.8551,
+          "support": 13497
+        },
+        "ID_CARD": {
+          "tp": 3305,
+          "fp": 400,
+          "fn": 816,
+          "precision": 0.892,
+          "recall": 0.802,
+          "f1": 0.8446,
+          "support": 4121
+        },
+        "PASSWORD": {
+          "tp": 2419,
+          "fp": 175,
+          "fn": 222,
+          "precision": 0.9325,
+          "recall": 0.9159,
+          "f1": 0.9242,
+          "support": 2641
+        },
+        "PHONE": {
+          "tp": 5365,
+          "fp": 445,
+          "fn": 317,
+          "precision": 0.9234,
+          "recall": 0.9442,
+          "f1": 0.9337,
+          "support": 5682
+        },
+        "SOCIAL_NUMBER": {
+          "tp": 2492,
+          "fp": 250,
+          "fn": 546,
+          "precision": 0.9088,
+          "recall": 0.8203,
+          "f1": 0.8623,
+          "support": 3038
+        },
+        "STREET": {
+          "tp": 3326,
+          "fp": 126,
+          "fn": 388,
+          "precision": 0.9635,
+          "recall": 0.8955,
+          "f1": 0.9283,
+          "support": 3714
+        },
+        "SURNAME": {
+          "tp": 5982,
+          "fp": 960,
+          "fn": 3211,
+          "precision": 0.8617,
+          "recall": 0.6507,
+          "f1": 0.7415,
+          "support": 9193
+        },
+        "TAX_NUMBER": {
+          "tp": 2014,
+          "fp": 95,
+          "fn": 595,
+          "precision": 0.955,
+          "recall": 0.7719,
+          "f1": 0.8538,
+          "support": 2609
+        },
+        "USERNAME": {
+          "tp": 8042,
+          "fp": 81,
+          "fn": 524,
+          "precision": 0.99,
+          "recall": 0.9388,
+          "f1": 0.9637,
+          "support": 8566
+        },
+        "ZIP_CODE": {
+          "tp": 3193,
+          "fp": 242,
+          "fn": 365,
+          "precision": 0.9295,
+          "recall": 0.8974,
+          "f1": 0.9132,
+          "support": 3558
+        }
+      },
+      "languages": {
+        "de": {
+          "tp": 14926,
+          "fp": 1341,
+          "fn": 2680,
+          "precision": 0.9176,
+          "recall": 0.8478,
+          "f1": 0.8813
+        },
+        "en": {
+          "tp": 15945,
+          "fp": 2018,
+          "fn": 4254,
+          "precision": 0.8877,
+          "recall": 0.7894,
+          "f1": 0.8356
+        },
+        "es": {
+          "tp": 7930,
+          "fp": 648,
+          "fn": 1129,
+          "precision": 0.9245,
+          "recall": 0.8754,
+          "f1": 0.8992
+        },
+        "fr": {
+          "tp": 15066,
+          "fp": 1248,
+          "fn": 2179,
+          "precision": 0.9235,
+          "recall": 0.8736,
+          "f1": 0.8979
+        },
+        "it": {
+          "tp": 14045,
+          "fp": 1208,
+          "fn": 2079,
+          "precision": 0.9208,
+          "recall": 0.8711,
+          "f1": 0.8952
+        },
+        "nl": {
+          "tp": 6752,
+          "fp": 722,
+          "fn": 1825,
+          "precision": 0.9034,
+          "recall": 0.7872,
+          "f1": 0.8413
+        }
+      },
+      "seconds": 23.9
+    }
+  }
+}
