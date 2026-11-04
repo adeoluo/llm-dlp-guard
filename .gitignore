@@ -37,3 +37,5 @@ checkpoints/
 rust/target/
 *.so
 .pytest-tmp/
+.pytest-tmp/
+.hypothesis/

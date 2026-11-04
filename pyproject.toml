@@ -1,23 +1,20 @@
 [project]
 name = "llm-dlp-guard"
 version = "0.1.0"
-description = "One-line description."
+description = "Data loss prevention for LLM traffic: PII, secrets and credentials in prompts and outputs"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
 authors = [{ name = "Adeolu Ogunnoiki" }]
 dependencies = [
+    "numpy>=1.26",
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
-    "structlog>=24.0",
+    "pyyaml>=6.0",
 ]
 
-[project.optional-dependencies]
-# install with: uv sync --extra ml
-ml = [
-    "numpy>=1.26",
-    "torch>=2.2",
-]
+[project.scripts]
+llm-dlp-guard = "llm_dlp_guard.cli:main"
 
 [dependency-groups]
 dev = [
@@ -25,14 +22,38 @@ dev = [
     "mypy>=1.14",
     "pytest>=8.0",
     "pytest-cov>=5.0",
+    "hypothesis>=6.100",
+    "types-pyyaml>=6.0",
+    "pyarrow>=15",
+]
+# Rebuild the Rust core in place while editing it: make rust-develop
+rust = [
+    "maturin>=1.7,<2",
+]
+# Reference tools for the comparison benchmarks and opt-in parity tests (not used in CI).
+validation = [
+    "detect-secrets>=1.5",
+    "presidio-analyzer>=2.2",
+    "pyarrow>=15",
+    # The spaCy model Presidio's default NLP engine loads.
+    "en-core-web-lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl",
 ]
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["maturin>=1.7,<2"]
+build-backend = "maturin"
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/llm_dlp_guard"]
+# The Rust core (rust/) is compiled into the package as `llm_dlp_guard.llm_dlp_guard_rs`,
+# so every install uses it; the Python implementation stays as the reference.
+[tool.maturin]
+python-source = "src"
+manifest-path = "rust/Cargo.toml"
+module-name = "llm_dlp_guard.llm_dlp_guard_rs"
+features = ["python"]
+
+[tool.uv]
+# Rebuild the extension when the Rust sources change.
+cache-keys = [{ file = "pyproject.toml" }, { file = "rust/Cargo.toml" }, { file = "rust/src/**/*.rs" }]
 
 # ---------------------------------------------------------------------------
 # Tooling
@@ -46,6 +67,15 @@ src = ["src", "tests"]
 select = ["E", "F", "I", "N", "UP", "B", "SIM", "C4", "RUF"]
 ignore = []
 
+[tool.ruff.lint.per-file-ignores]
+# Benchmark reports emit wide Markdown table rows.
+"benchmarks/*.py" = ["E501"]
+# Regular expressions and secret-format templates read better unwrapped.
+"src/llm_dlp_guard/catalog.py" = ["E501"]
+"src/llm_dlp_guard/secrets_corpus.py" = ["E501"]
+# Test tables of inputs and expected outputs.
+"tests/*.py" = ["E501"]
+
 [tool.ruff.lint.isort]
 known-first-party = ["llm_dlp_guard"]
 
@@ -56,8 +86,16 @@ warn_unused_configs = true
 disallow_untyped_defs = true
 plugins = ["pydantic.mypy"]
 
+[[tool.mypy.overrides]]
+module = ["llm_dlp_guard.llm_dlp_guard_rs", "detect_secrets.*", "presidio_analyzer.*", "pyarrow.*"]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
-addopts = "-ra -q"
+addopts = "-ra -q -p no:cacheprovider --basetemp=.pytest-tmp"
+markers = [
+    "slow: larger-scale tests",
+    "validation: comparisons with reference tools (uv sync --group validation)",
+]
 testpaths = ["tests"]
 
 [tool.coverage.run]
