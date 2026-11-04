@@ -25,7 +25,7 @@ def main() -> None:
         "Bram Okafor (bram.okafor@example.org, +44 20 7946 0958) about the refund on\n"
         "card 4111 1111 1111 1111 to IBAN GB82 WEST 1234 5698 7654 32.\n"
         "He lives at 12 Mill Lane, Utrecht.\n"
-        f"Our deploy failed with GITHUB_TOKEN={github} and key {aws} from 203.0.113.50.\n"
+        f"Our deploy failed with GITHUB_TOKEN={github} and key {aws} from 81.2.69.160.\n"
     )
     (OUT / "prompt.txt").write_text(prompt, encoding="utf-8")
     answer = (
