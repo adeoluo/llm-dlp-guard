@@ -283,6 +283,9 @@ VALIDATORS: dict[str, Callable[[str], float | None]] = {
     "high_entropy": lambda v: _flag(shannon_entropy(v) >= 3.0),
 }
 
+# Checksum and structure validators; their matches win overlaps with tagger spans.
+STRUCTURED = frozenset({"luhn", "iban", "ipv4", "ipv6"})
+
 
 def check(name: str, value: str) -> float | None:
     """Run validator ``name``; unknown names reject."""

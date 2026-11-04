@@ -35,23 +35,32 @@ impl Detector {
     }
 
     /// Candidates starting at or after character `from`; the tagger sees only `text[from..]`.
+    /// Tagger spans that overlap a structured pattern match (see `Engine::is_structured`) are
+    /// dropped, so a confident tagger span can neither relabel a Luhn-valid card nor cover part
+    /// of an address and leave the rest visible.
     pub fn candidates_from(&self, text: &str, from: usize) -> Vec<Finding> {
         let mut found = self.engine.scan_candidates_from(text, from);
         if let Some(model) = &self.model {
+            let structured: Vec<(usize, usize)> = found
+                .iter()
+                .filter(|f| self.engine.is_structured(f.rank))
+                .map(|f| (f.start, f.end))
+                .collect();
             let byte = char_to_byte(text, from);
-            found.extend(
-                model
-                    .predict(&text[byte..])
-                    .into_iter()
-                    .filter(|f| f.score >= self.ner_min_score)
-                    .map(|mut f| {
-                        f.start += from;
-                        f.end += from;
-                        f.match_start += from;
-                        f.match_end += from;
-                        f
-                    }),
-            );
+            let tagged: Vec<Finding> = model
+                .predict(&text[byte..])
+                .into_iter()
+                .filter(|f| f.score >= self.ner_min_score)
+                .map(|mut f| {
+                    f.start += from;
+                    f.end += from;
+                    f.match_start += from;
+                    f.match_end += from;
+                    f
+                })
+                .filter(|f| !structured.iter().any(|&(s, e)| s < f.end && f.start < e))
+                .collect();
+            found.extend(tagged);
         }
         found
     }

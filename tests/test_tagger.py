@@ -76,3 +76,18 @@ def test_detector_merges_tagger_and_patterns(tagger_path: Path) -> None:
     assert "EMAIL" in labels
     with pytest.raises(ValueError):
         Detector(tagger=Tagger.load(tagger_path, backend="python"), backend="rust")
+
+
+@pytest.mark.parametrize("backend", ["rust", "python"])
+def test_structured_matches_win_over_tagger_spans(tagger_path: Path, backend: str) -> None:
+    det = Detector.from_model(tagger_path, backend=backend)
+    structured = {"credit_card", "iban", "ipv4", "ipv6"}
+    for value in ["81.2.69.160", "4111 1111 1111 1111", "GB82 WEST 1234 5698 7654 32", "fe80::1"]:
+        text = f"Ship the parcel to Ivo Novak, {value} Mill Lane, Brno."
+        found = det.candidates(text)
+        spans = [(f.start, f.end) for f in found if f.source in structured]
+        assert spans, value
+        ner = [f for f in found if f.source == "ner"]
+        assert not [f for f in ner for s, e in spans if s < f.end and f.start < e]
+        start = text.index(value)
+        assert (start, start + len(value)) in [(f.start, f.end) for f in det.scan(text)]

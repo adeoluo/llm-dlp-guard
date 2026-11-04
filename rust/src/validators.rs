@@ -18,6 +18,9 @@ pub const VALIDATORS: &[&str] = &[
     "high_entropy",
 ];
 
+/// Checksum and structure validators; their matches win overlaps with tagger spans.
+pub const STRUCTURED: &[&str] = &["luhn", "iban", "ipv4", "ipv6"];
+
 /// Run validator `name` on `value`.
 pub fn check(name: &str, value: &str) -> Option<f64> {
     match name {
