@@ -1,38 +1,46 @@
----
-title: System Architecture - Llm Dlp Guard
-config:
-  theme: base
-  themeVariables:
-    fontFamily: "Inter, system-ui, sans-serif"
-    primaryColor: "#F8FAFC"
-    primaryBorderColor: "#1E293B"
-    primaryTextColor: "#1E293B"
-    lineColor: "#64748B"
-    clusterBkg: "#E2E8F0"
-    clusterBorder: "#94A3B8"
----
 flowchart LR
+    classDef edge     fill:#F59E0B,stroke:#1E293B,color:#1E293B,stroke-width:1px;
     classDef core     fill:#6366F1,stroke:#1E293B,color:#ffffff,stroke-width:1px;
     classDef data     fill:#10B981,stroke:#1E293B,color:#ffffff,stroke-width:1px;
-    classDef external fill:#F59E0B,stroke:#1E293B,color:#1E293B,stroke-width:1px;
-    classDef danger   fill:#EF4444,stroke:#1E293B,color:#ffffff,stroke-width:1px;
+    classDef control  fill:#0EA5E9,stroke:#1E293B,color:#ffffff,stroke-width:1px;
+    classDef obs      fill:#CBD5E1,stroke:#1E293B,color:#1E293B,stroke-width:1px;
 
-    User([User]):::external
-
-    subgraph Application["Application Service"]
-        API[API Layer]:::core
-        Core[Core Engine]:::core
-        Evaluation[Evaluation Harness]:::core
+    subgraph Interfaces["Interfaces"]
+        direction TB
+        Clients([Apps and users]):::edge
+        CLI["CLI<br/>scan, redact, stream"]:::edge
+        Proxy["HTTP proxy<br/>/v1/chat/completions"]:::core
+        Provider(["LLM provider"]):::edge
+        Clients --> Proxy --> Provider ~~~ CLI
     end
 
-    Cache[(Semantic Cache)]:::data
-    Store[(Datastore / Index)]:::data
-    LLM{{LLM Provider}}:::external
+    subgraph Detect["Detection (Rust)"]
+        direction TB
+        Prefilter["Aho-Corasick<br/>anchor prefilter"]:::core
+        Regex["Regex engine<br/>29 patterns"]:::core
+        Validators["Validators<br/>Luhn, IBAN, JWT"]:::control
+        Tagger["CRF tagger<br/>names, addresses"]:::core
+        Resolve["Overlap resolution"]:::core
+        Prefilter --> Regex --> Validators ~~~ Tagger --> Resolve
+    end
 
-    User -->|request| API
-    API --> Core
-    Core -->|lookup| Cache
-    Core -->|retrieve| Store
-    Core -->|completion| LLM
-    Core -.->|traces/metrics| Evaluation
-    Core -->|response| User
+    subgraph Policy["Policy and redaction"]
+        direction TB
+        Catalog[("Catalog and<br/>tagger weights")]:::data
+        Rules["Policy engine<br/>per direction"]:::control
+        Vault[("Vault<br/>reversible tokens")]:::data
+        Stream["Stream gate<br/>hold-back"]:::control
+        Catalog ~~~ Rules --> Vault ~~~ Stream
+    end
+
+    subgraph Obs["Evaluation and observability"]
+        direction TB
+        Decisions["Decisions<br/>text and findings"]:::obs
+        Metrics["Metrics<br/>Prometheus text"]:::obs
+        Bench["Benchmarks<br/>PII and secrets"]:::obs
+        Decisions ~~~ Metrics ~~~ Bench
+    end
+
+    Interfaces -->|text| Detect
+    Detect -->|findings| Policy
+    Policy -->|decisions| Obs
