@@ -5,7 +5,7 @@
     "cpus": 8,
     "python": "3.12.14"
   },
-  "written": "2026-11-04 11:56:22",
+  "written": "2026-11-04 17:36:38",
   "documents": 101378,
   "megabytes": 14.56,
   "slow_engine_documents": 3000,
@@ -13,52 +13,52 @@
     "llm-dlp-guard patterns, Rust, 1 thread": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 2.57,
-      "mb_per_second": 5.671
+      "seconds": 0.66,
+      "mb_per_second": 21.997
     },
     "llm-dlp-guard patterns, Rust, batch on 8 threads": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 1.48,
-      "mb_per_second": 9.838
+      "seconds": 0.36,
+      "mb_per_second": 40.771
     },
     "llm-dlp-guard patterns + tagger, Rust, 1 thread": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 42.88,
-      "mb_per_second": 0.339
+      "seconds": 9.12,
+      "mb_per_second": 1.595
     },
     "llm-dlp-guard patterns + tagger, Rust, batch on 8 threads": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 13.98,
-      "mb_per_second": 1.041
+      "seconds": 2.34,
+      "mb_per_second": 6.23
     },
     "llm-dlp-guard patterns, Python reference": {
       "documents": 3000,
       "mb": 0.561,
-      "seconds": 1.22,
-      "mb_per_second": 0.459
+      "seconds": 0.2,
+      "mb_per_second": 2.869
     },
     "Presidio 2.2 analyze (en_core_web_lg)": {
       "documents": 1500,
       "mb": 0.297,
-      "seconds": 39.68,
-      "mb_per_second": 0.007
+      "seconds": 9.82,
+      "mb_per_second": 0.03
     },
     "detect-secrets 1.5 line scan": {
       "documents": 3000,
       "mb": 0.561,
-      "seconds": 4.14,
-      "mb_per_second": 0.135
+      "seconds": 1.89,
+      "mb_per_second": 0.297
     }
   },
   "streaming_patterns_only": {
     "chunks": 115998,
-    "median_ms": 0.0133,
-    "p99_ms": 0.0609,
+    "median_ms": 0.007,
+    "p99_ms": 0.0325,
     "window_chars": 342,
     "max_held_chars": 384
   },
-  "peak_rss_mb": 487.2
+  "peak_rss_mb": 1043.4
 }

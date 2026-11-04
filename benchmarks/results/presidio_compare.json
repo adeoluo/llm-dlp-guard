@@ -5,31 +5,31 @@
     "cpus": 8,
     "python": "3.12.14"
   },
-  "written": "2026-11-04 11:49:02",
+  "written": "2026-11-04 17:35:04",
   "ai4privacy_en": {
     "records": 17046,
     "results": {
       "llm-dlp-guard (patterns + tagger)": {
         "documents": 17046,
-        "seconds": 5.8,
-        "mb_per_second": 0.452,
+        "seconds": 1.7,
+        "mb_per_second": 1.519,
         "exact": {
           "micro": {
-            "tp": 16084,
-            "fp": 1474,
-            "fn": 3667,
-            "precision": 0.916,
-            "recall": 0.8143,
-            "f1": 0.8622
+            "tp": 16080,
+            "fp": 1477,
+            "fn": 3671,
+            "precision": 0.9159,
+            "recall": 0.8141,
+            "f1": 0.862
           },
           "types": {
             "ACCOUNT_NUMBER": {
-              "tp": 479,
+              "tp": 476,
               "fp": 137,
-              "fn": 483,
-              "precision": 0.7776,
-              "recall": 0.4979,
-              "f1": 0.6071
+              "fn": 486,
+              "precision": 0.7765,
+              "recall": 0.4948,
+              "f1": 0.6044
             },
             "ADDRESS": {
               "tp": 3907,
@@ -41,11 +41,11 @@
             },
             "CREDIT_CARD": {
               "tp": 300,
-              "fp": 340,
+              "fp": 343,
               "fn": 105,
-              "precision": 0.4688,
+              "precision": 0.4666,
               "recall": 0.7407,
-              "f1": 0.5742
+              "f1": 0.5725
             },
             "DATE_OF_BIRTH": {
               "tp": 591,
@@ -88,12 +88,12 @@
               "f1": 0.8977
             },
             "PHONE": {
-              "tp": 1197,
+              "tp": 1196,
               "fp": 204,
-              "fn": 67,
-              "precision": 0.8544,
-              "recall": 0.947,
-              "f1": 0.8983
+              "fn": 68,
+              "precision": 0.8543,
+              "recall": 0.9462,
+              "f1": 0.8979
             },
             "SSN": {
               "tp": 449,
@@ -115,21 +115,21 @@
         },
         "overlap": {
           "micro": {
-            "tp": 16264,
-            "fp": 1296,
-            "fn": 3487,
-            "precision": 0.9262,
-            "recall": 0.8235,
-            "f1": 0.8718
+            "tp": 16260,
+            "fp": 1299,
+            "fn": 3491,
+            "precision": 0.926,
+            "recall": 0.8232,
+            "f1": 0.8716
           },
           "types": {
             "ACCOUNT_NUMBER": {
-              "tp": 479,
+              "tp": 476,
               "fp": 137,
-              "fn": 483,
-              "precision": 0.7776,
-              "recall": 0.4979,
-              "f1": 0.6071
+              "fn": 486,
+              "precision": 0.7765,
+              "recall": 0.4948,
+              "f1": 0.6044
             },
             "ADDRESS": {
               "tp": 3954,
@@ -141,11 +141,11 @@
             },
             "CREDIT_CARD": {
               "tp": 301,
-              "fp": 339,
+              "fp": 342,
               "fn": 104,
-              "precision": 0.4703,
+              "precision": 0.4681,
               "recall": 0.7432,
-              "f1": 0.5761
+              "f1": 0.5744
             },
             "DATE_OF_BIRTH": {
               "tp": 592,
@@ -188,12 +188,12 @@
               "f1": 0.9035
             },
             "PHONE": {
-              "tp": 1256,
+              "tp": 1255,
               "fp": 145,
-              "fn": 8,
-              "precision": 0.8965,
-              "recall": 0.9937,
-              "f1": 0.9426
+              "fn": 9,
+              "precision": 0.8964,
+              "recall": 0.9929,
+              "f1": 0.9422
             },
             "SSN": {
               "tp": 449,
@@ -216,8 +216,8 @@
       },
       "llm-dlp-guard (patterns only)": {
         "documents": 17046,
-        "seconds": 0.2,
-        "mb_per_second": 13.561,
+        "seconds": 0.1,
+        "mb_per_second": 43.535,
         "exact": {
           "micro": {
             "tp": 2537,
@@ -421,25 +421,25 @@
       },
       "Presidio 2.2 (default recognizers, en_core_web_lg)": {
         "documents": 17046,
-        "seconds": 491.0,
-        "mb_per_second": 0.005,
+        "seconds": 85.3,
+        "mb_per_second": 0.03,
         "exact": {
           "micro": {
-            "tp": 7232,
-            "fp": 20400,
-            "fn": 12519,
-            "precision": 0.2617,
+            "tp": 7233,
+            "fp": 20399,
+            "fn": 12518,
+            "precision": 0.2618,
             "recall": 0.3662,
             "f1": 0.3053
           },
           "types": {
             "ACCOUNT_NUMBER": {
-              "tp": 296,
-              "fp": 1123,
-              "fn": 666,
-              "precision": 0.2086,
-              "recall": 0.3077,
-              "f1": 0.2486
+              "tp": 301,
+              "fp": 1143,
+              "fn": 661,
+              "precision": 0.2084,
+              "recall": 0.3129,
+              "f1": 0.2502
             },
             "ADDRESS": {
               "tp": 1386,
@@ -474,12 +474,12 @@
               "f1": 0.9962
             },
             "ID_NUMBER": {
-              "tp": 228,
-              "fp": 3562,
-              "fn": 1879,
-              "precision": 0.0602,
-              "recall": 0.1082,
-              "f1": 0.0773
+              "tp": 224,
+              "fp": 3554,
+              "fn": 1883,
+              "precision": 0.0593,
+              "recall": 0.1063,
+              "f1": 0.0761
             },
             "PASSWORD": {
               "tp": 0,
@@ -499,19 +499,19 @@
             },
             "PHONE": {
               "tp": 294,
-              "fp": 1753,
+              "fp": 1741,
               "fn": 970,
-              "precision": 0.1436,
+              "precision": 0.1445,
               "recall": 0.2326,
-              "f1": 0.1776
+              "f1": 0.1782
             },
             "SSN": {
               "tp": 356,
-              "fp": 381,
+              "fp": 380,
               "fn": 374,
-              "precision": 0.483,
+              "precision": 0.4837,
               "recall": 0.4877,
-              "f1": 0.4853
+              "f1": 0.4857
             },
             "USERNAME": {
               "tp": 0,
@@ -525,21 +525,21 @@
         },
         "overlap": {
           "micro": {
-            "tp": 8248,
-            "fp": 19368,
-            "fn": 11503,
+            "tp": 8249,
+            "fp": 19367,
+            "fn": 11502,
             "precision": 0.2987,
             "recall": 0.4176,
             "f1": 0.3483
           },
           "types": {
             "ACCOUNT_NUMBER": {
-              "tp": 296,
-              "fp": 1123,
-              "fn": 666,
-              "precision": 0.2086,
-              "recall": 0.3077,
-              "f1": 0.2486
+              "tp": 301,
+              "fp": 1143,
+              "fn": 661,
+              "precision": 0.2084,
+              "recall": 0.3129,
+              "f1": 0.2502
             },
             "ADDRESS": {
               "tp": 1594,
@@ -574,12 +574,12 @@
               "f1": 0.9994
             },
             "ID_NUMBER": {
-              "tp": 349,
-              "fp": 3441,
-              "fn": 1758,
-              "precision": 0.0921,
-              "recall": 0.1656,
-              "f1": 0.1184
+              "tp": 345,
+              "fp": 3433,
+              "fn": 1762,
+              "precision": 0.0913,
+              "recall": 0.1637,
+              "f1": 0.1172
             },
             "PASSWORD": {
               "tp": 0,
@@ -599,19 +599,19 @@
             },
             "PHONE": {
               "tp": 407,
-              "fp": 1640,
+              "fp": 1628,
               "fn": 857,
-              "precision": 0.1988,
+              "precision": 0.2,
               "recall": 0.322,
-              "f1": 0.2458
+              "f1": 0.2467
             },
             "SSN": {
               "tp": 356,
-              "fp": 381,
+              "fp": 380,
               "fn": 374,
-              "precision": 0.483,
+              "precision": 0.4837,
               "recall": 0.4877,
-              "f1": 0.4853
+              "f1": 0.4857
             },
             "USERNAME": {
               "tp": 0,
@@ -633,16 +633,16 @@
     "results": {
       "llm-dlp-guard (patterns + tagger)": {
         "documents": 5000,
-        "seconds": 15.6,
-        "mb_per_second": 0.307,
+        "seconds": 2.8,
+        "mb_per_second": 1.7,
         "exact": {
           "micro": {
-            "tp": 8186,
-            "fp": 4842,
-            "fn": 7800,
-            "precision": 0.6283,
-            "recall": 0.5121,
-            "f1": 0.5643
+            "tp": 8381,
+            "fp": 4647,
+            "fn": 7605,
+            "precision": 0.6433,
+            "recall": 0.5243,
+            "f1": 0.5777
           },
           "types": {
             "ACCOUNT_NUMBER": {
@@ -655,11 +655,11 @@
             },
             "ADDRESS": {
               "tp": 1027,
-              "fp": 1260,
+              "fp": 1257,
               "fn": 1026,
-              "precision": 0.4491,
+              "precision": 0.4496,
               "recall": 0.5002,
-              "f1": 0.4733
+              "f1": 0.4736
             },
             "API_KEY": {
               "tp": 23,
@@ -670,12 +670,12 @@
               "f1": 0.1933
             },
             "CREDIT_CARD": {
-              "tp": 31,
-              "fp": 5,
-              "fn": 579,
-              "precision": 0.8611,
-              "recall": 0.0508,
-              "f1": 0.096
+              "tp": 58,
+              "fp": 6,
+              "fn": 552,
+              "precision": 0.9062,
+              "recall": 0.0951,
+              "f1": 0.1721
             },
             "DATE_OF_BIRTH": {
               "tp": 12,
@@ -695,27 +695,27 @@
             },
             "ID_NUMBER": {
               "tp": 66,
-              "fp": 386,
+              "fp": 336,
               "fn": 143,
-              "precision": 0.146,
+              "precision": 0.1642,
               "recall": 0.3158,
-              "f1": 0.1997
+              "f1": 0.216
             },
             "IP_ADDRESS": {
-              "tp": 264,
-              "fp": 20,
-              "fn": 183,
-              "precision": 0.9296,
-              "recall": 0.5906,
-              "f1": 0.7223
+              "tp": 432,
+              "fp": 21,
+              "fn": 15,
+              "precision": 0.9536,
+              "recall": 0.9664,
+              "f1": 0.96
             },
             "PASSWORD": {
               "tp": 188,
-              "fp": 412,
+              "fp": 358,
               "fn": 178,
-              "precision": 0.3133,
+              "precision": 0.3443,
               "recall": 0.5137,
-              "f1": 0.3892
+              "f1": 0.4123
             },
             "PERSON": {
               "tp": 2260,
@@ -727,19 +727,19 @@
             },
             "PHONE": {
               "tp": 1140,
-              "fp": 609,
+              "fp": 581,
               "fn": 354,
-              "precision": 0.6518,
+              "precision": 0.6624,
               "recall": 0.7631,
-              "f1": 0.7031
+              "f1": 0.7092
             },
             "SSN": {
               "tp": 280,
-              "fp": 380,
+              "fp": 318,
               "fn": 22,
-              "precision": 0.4242,
+              "precision": 0.4682,
               "recall": 0.9272,
-              "f1": 0.5821
+              "f1": 0.6222
             },
             "USERNAME": {
               "tp": 376,
@@ -753,12 +753,12 @@
         },
         "overlap": {
           "micro": {
-            "tp": 9713,
-            "fp": 3301,
-            "fn": 6273,
-            "precision": 0.7464,
-            "recall": 0.6076,
-            "f1": 0.6699
+            "tp": 9908,
+            "fp": 3106,
+            "fn": 6078,
+            "precision": 0.7613,
+            "recall": 0.6198,
+            "f1": 0.6833
           },
           "types": {
             "ACCOUNT_NUMBER": {
@@ -771,11 +771,11 @@
             },
             "ADDRESS": {
               "tp": 1435,
-              "fp": 839,
+              "fp": 836,
               "fn": 618,
-              "precision": 0.631,
+              "precision": 0.6319,
               "recall": 0.699,
-              "f1": 0.6633
+              "f1": 0.6637
             },
             "API_KEY": {
               "tp": 23,
@@ -786,12 +786,12 @@
               "f1": 0.1933
             },
             "CREDIT_CARD": {
-              "tp": 31,
-              "fp": 5,
-              "fn": 579,
-              "precision": 0.8611,
-              "recall": 0.0508,
-              "f1": 0.096
+              "tp": 58,
+              "fp": 6,
+              "fn": 552,
+              "precision": 0.9062,
+              "recall": 0.0951,
+              "f1": 0.1721
             },
             "DATE_OF_BIRTH": {
               "tp": 253,
@@ -811,27 +811,27 @@
             },
             "ID_NUMBER": {
               "tp": 70,
-              "fp": 382,
+              "fp": 332,
               "fn": 139,
-              "precision": 0.1549,
+              "precision": 0.1741,
               "recall": 0.3349,
-              "f1": 0.2118
+              "f1": 0.2291
             },
             "IP_ADDRESS": {
-              "tp": 277,
-              "fp": 7,
-              "fn": 170,
-              "precision": 0.9754,
-              "recall": 0.6197,
-              "f1": 0.7579
+              "tp": 445,
+              "fp": 8,
+              "fn": 2,
+              "precision": 0.9823,
+              "recall": 0.9955,
+              "f1": 0.9889
             },
             "PASSWORD": {
               "tp": 209,
-              "fp": 391,
+              "fp": 337,
               "fn": 157,
-              "precision": 0.3483,
+              "precision": 0.3828,
               "recall": 0.571,
-              "f1": 0.4327
+              "f1": 0.4583
             },
             "PERSON": {
               "tp": 2631,
@@ -843,19 +843,19 @@
             },
             "PHONE": {
               "tp": 1149,
-              "fp": 600,
+              "fp": 572,
               "fn": 345,
-              "precision": 0.6569,
+              "precision": 0.6676,
               "recall": 0.7691,
-              "f1": 0.7086
+              "f1": 0.7148
             },
             "SSN": {
               "tp": 284,
-              "fp": 376,
+              "fp": 314,
               "fn": 18,
-              "precision": 0.4303,
+              "precision": 0.4749,
               "recall": 0.9404,
-              "f1": 0.5904
+              "f1": 0.6311
             },
             "USERNAME": {
               "tp": 387,
@@ -870,8 +870,8 @@
       },
       "llm-dlp-guard (patterns only)": {
         "documents": 5000,
-        "seconds": 0.3,
-        "mb_per_second": 18.111,
+        "seconds": 0.1,
+        "mb_per_second": 70.382,
         "exact": {
           "micro": {
             "tp": 4911,
@@ -1107,25 +1107,25 @@
       },
       "Presidio 2.2 (default recognizers, en_core_web_lg)": {
         "documents": 5000,
-        "seconds": 454.5,
-        "mb_per_second": 0.011,
+        "seconds": 98.7,
+        "mb_per_second": 0.049,
         "exact": {
           "micro": {
-            "tp": 9517,
-            "fp": 6978,
-            "fn": 6469,
-            "precision": 0.577,
+            "tp": 9516,
+            "fp": 6979,
+            "fn": 6470,
+            "precision": 0.5769,
             "recall": 0.5953,
-            "f1": 0.586
+            "f1": 0.5859
           },
           "types": {
             "ACCOUNT_NUMBER": {
-              "tp": 153,
-              "fp": 94,
-              "fn": 677,
-              "precision": 0.6194,
-              "recall": 0.1843,
-              "f1": 0.2841
+              "tp": 152,
+              "fp": 95,
+              "fn": 678,
+              "precision": 0.6154,
+              "recall": 0.1831,
+              "f1": 0.2823
             },
             "ADDRESS": {
               "tp": 723,
@@ -1153,7 +1153,7 @@
             },
             "DATE_OF_BIRTH": {
               "tp": 942,
-              "fp": 3507,
+              "fp": 3508,
               "fn": 2,
               "precision": 0.2117,
               "recall": 0.9979,
@@ -1168,12 +1168,12 @@
               "f1": 0.9941
             },
             "ID_NUMBER": {
-              "tp": 12,
-              "fp": 722,
-              "fn": 197,
-              "precision": 0.0163,
-              "recall": 0.0574,
-              "f1": 0.0255
+              "tp": 13,
+              "fp": 725,
+              "fn": 196,
+              "precision": 0.0176,
+              "recall": 0.0622,
+              "f1": 0.0275
             },
             "IP_ADDRESS": {
               "tp": 372,
@@ -1208,12 +1208,12 @@
               "f1": 0.7858
             },
             "SSN": {
-              "tp": 300,
-              "fp": 66,
-              "fn": 2,
-              "precision": 0.8197,
-              "recall": 0.9934,
-              "f1": 0.8982
+              "tp": 299,
+              "fp": 62,
+              "fn": 3,
+              "precision": 0.8283,
+              "recall": 0.9901,
+              "f1": 0.902
             },
             "USERNAME": {
               "tp": 0,
@@ -1227,21 +1227,21 @@
         },
         "overlap": {
           "micro": {
-            "tp": 10869,
-            "fp": 5634,
-            "fn": 5117,
-            "precision": 0.6586,
-            "recall": 0.6799,
-            "f1": 0.6691
+            "tp": 10866,
+            "fp": 5637,
+            "fn": 5120,
+            "precision": 0.6584,
+            "recall": 0.6797,
+            "f1": 0.6689
           },
           "types": {
             "ACCOUNT_NUMBER": {
-              "tp": 200,
-              "fp": 47,
-              "fn": 630,
-              "precision": 0.8097,
-              "recall": 0.241,
-              "f1": 0.3714
+              "tp": 197,
+              "fp": 50,
+              "fn": 633,
+              "precision": 0.7976,
+              "recall": 0.2373,
+              "f1": 0.3658
             },
             "ADDRESS": {
               "tp": 973,
@@ -1269,11 +1269,11 @@
             },
             "DATE_OF_BIRTH": {
               "tp": 943,
-              "fp": 3506,
+              "fp": 3507,
               "fn": 1,
-              "precision": 0.212,
+              "precision": 0.2119,
               "recall": 0.9989,
-              "f1": 0.3497
+              "f1": 0.3496
             },
             "EMAIL": {
               "tp": 2783,
@@ -1284,12 +1284,12 @@
               "f1": 0.9955
             },
             "ID_NUMBER": {
-              "tp": 25,
-              "fp": 708,
-              "fn": 184,
-              "precision": 0.0341,
-              "recall": 0.1196,
-              "f1": 0.0531
+              "tp": 26,
+              "fp": 711,
+              "fn": 183,
+              "precision": 0.0353,
+              "recall": 0.1244,
+              "f1": 0.055
             },
             "IP_ADDRESS": {
               "tp": 445,
@@ -1324,12 +1324,12 @@
               "f1": 0.7872
             },
             "SSN": {
-              "tp": 300,
-              "fp": 66,
-              "fn": 2,
-              "precision": 0.8197,
-              "recall": 0.9934,
-              "f1": 0.8982
+              "tp": 299,
+              "fp": 62,
+              "fn": 3,
+              "precision": 0.8283,
+              "recall": 0.9901,
+              "f1": 0.902
             },
             "USERNAME": {
               "tp": 0,
@@ -1348,33 +1348,33 @@
     "documents": 100000,
     "result": {
       "documents": 100000,
-      "seconds": 367.6,
-      "mb_per_second": 0.261,
+      "seconds": 58.3,
+      "mb_per_second": 1.644,
       "exact": {
         "micro": {
-          "tp": 161148,
-          "fp": 95337,
-          "fn": 155923,
-          "precision": 0.6283,
-          "recall": 0.5082,
-          "f1": 0.5619
+          "tp": 165690,
+          "fp": 90762,
+          "fn": 151381,
+          "precision": 0.6461,
+          "recall": 0.5226,
+          "f1": 0.5778
         },
         "types": {
           "ACCOUNT_NUMBER": {
-            "tp": 2715,
+            "tp": 2712,
             "fp": 747,
-            "fn": 13978,
-            "precision": 0.7842,
-            "recall": 0.1626,
-            "f1": 0.2694
+            "fn": 13981,
+            "precision": 0.784,
+            "recall": 0.1625,
+            "f1": 0.2692
           },
           "ADDRESS": {
             "tp": 20098,
-            "fp": 23845,
+            "fp": 23792,
             "fn": 21166,
-            "precision": 0.4574,
+            "precision": 0.4579,
             "recall": 0.4871,
-            "f1": 0.4717
+            "f1": 0.472
           },
           "API_KEY": {
             "tp": 558,
@@ -1385,12 +1385,12 @@
             "f1": 0.2127
           },
           "CREDIT_CARD": {
-            "tp": 756,
-            "fp": 176,
-            "fn": 12109,
-            "precision": 0.8112,
-            "recall": 0.0588,
-            "f1": 0.1096
+            "tp": 1527,
+            "fp": 202,
+            "fn": 11338,
+            "precision": 0.8832,
+            "recall": 0.1187,
+            "f1": 0.2093
           },
           "DATE_OF_BIRTH": {
             "tp": 272,
@@ -1409,28 +1409,28 @@
             "f1": 0.8403
           },
           "ID_NUMBER": {
-            "tp": 1438,
-            "fp": 8374,
-            "fn": 2711,
-            "precision": 0.1466,
-            "recall": 0.3466,
-            "f1": 0.206
+            "tp": 1437,
+            "fp": 7220,
+            "fn": 2712,
+            "precision": 0.166,
+            "recall": 0.3463,
+            "f1": 0.2244
           },
           "IP_ADDRESS": {
-            "tp": 5137,
-            "fp": 334,
-            "fn": 4075,
-            "precision": 0.939,
-            "recall": 0.5576,
-            "f1": 0.6997
+            "tp": 8912,
+            "fp": 419,
+            "fn": 300,
+            "precision": 0.9551,
+            "recall": 0.9674,
+            "f1": 0.9612
           },
           "PASSWORD": {
             "tp": 3639,
-            "fp": 8472,
+            "fp": 7336,
             "fn": 3343,
-            "precision": 0.3005,
+            "precision": 0.3316,
             "recall": 0.5212,
-            "f1": 0.3812
+            "f1": 0.4053
           },
           "PERSON": {
             "tp": 45071,
@@ -1442,19 +1442,19 @@
           },
           "PHONE": {
             "tp": 22823,
-            "fp": 12215,
+            "fp": 11400,
             "fn": 7529,
-            "precision": 0.6514,
+            "precision": 0.6669,
             "recall": 0.7519,
-            "f1": 0.6981
+            "f1": 0.7069
           },
           "SSN": {
             "tp": 5683,
-            "fp": 7061,
+            "fp": 5533,
             "fn": 379,
-            "precision": 0.4459,
+            "precision": 0.5067,
             "recall": 0.9375,
-            "f1": 0.6044
+            "f1": 0.6578
           },
           "USERNAME": {
             "tp": 7532,
@@ -1468,29 +1468,29 @@
       },
       "overlap": {
         "micro": {
-          "tp": 192137,
-          "fp": 63993,
-          "fn": 124934,
-          "precision": 0.7502,
-          "recall": 0.606,
-          "f1": 0.6704
+          "tp": 196698,
+          "fp": 59398,
+          "fn": 120373,
+          "precision": 0.7681,
+          "recall": 0.6204,
+          "f1": 0.6864
         },
         "types": {
           "ACCOUNT_NUMBER": {
-            "tp": 3367,
+            "tp": 3364,
             "fp": 95,
-            "fn": 13326,
-            "precision": 0.9726,
-            "recall": 0.2017,
-            "f1": 0.3341
+            "fn": 13329,
+            "precision": 0.9725,
+            "recall": 0.2015,
+            "f1": 0.3339
           },
           "ADDRESS": {
             "tp": 28390,
-            "fp": 15239,
+            "fp": 15186,
             "fn": 12874,
-            "precision": 0.6507,
+            "precision": 0.6515,
             "recall": 0.688,
-            "f1": 0.6688
+            "f1": 0.6693
           },
           "API_KEY": {
             "tp": 566,
@@ -1501,12 +1501,12 @@
             "f1": 0.2158
           },
           "CREDIT_CARD": {
-            "tp": 758,
-            "fp": 174,
-            "fn": 12107,
-            "precision": 0.8133,
-            "recall": 0.0589,
-            "f1": 0.1099
+            "tp": 1530,
+            "fp": 199,
+            "fn": 11335,
+            "precision": 0.8849,
+            "recall": 0.1189,
+            "f1": 0.2097
           },
           "DATE_OF_BIRTH": {
             "tp": 4852,
@@ -1525,28 +1525,28 @@
             "f1": 0.9913
           },
           "ID_NUMBER": {
-            "tp": 1494,
-            "fp": 8318,
-            "fn": 2655,
-            "precision": 0.1523,
-            "recall": 0.3601,
-            "f1": 0.214
+            "tp": 1493,
+            "fp": 7164,
+            "fn": 2656,
+            "precision": 0.1725,
+            "recall": 0.3598,
+            "f1": 0.2332
           },
           "IP_ADDRESS": {
-            "tp": 5340,
-            "fp": 130,
-            "fn": 3872,
-            "precision": 0.9762,
-            "recall": 0.5797,
-            "f1": 0.7274
+            "tp": 9133,
+            "fp": 196,
+            "fn": 79,
+            "precision": 0.979,
+            "recall": 0.9914,
+            "f1": 0.9852
           },
           "PASSWORD": {
             "tp": 4111,
-            "fp": 8000,
+            "fp": 6864,
             "fn": 2871,
-            "precision": 0.3394,
+            "precision": 0.3746,
             "recall": 0.5888,
-            "f1": 0.4306
+            "f1": 0.4579
           },
           "PERSON": {
             "tp": 53248,
@@ -1558,19 +1558,19 @@
           },
           "PHONE": {
             "tp": 22974,
-            "fp": 12064,
+            "fp": 11249,
             "fn": 7378,
-            "precision": 0.6557,
+            "precision": 0.6713,
             "recall": 0.7569,
-            "f1": 0.7027
+            "f1": 0.7115
           },
           "SSN": {
             "tp": 5718,
-            "fp": 7026,
+            "fp": 5498,
             "fn": 344,
-            "precision": 0.4487,
+            "precision": 0.5098,
             "recall": 0.9433,
-            "f1": 0.6081
+            "f1": 0.6619
           },
           "USERNAME": {
             "tp": 7745,
@@ -1584,5 +1584,5 @@
       }
     }
   },
-  "peak_rss_mb": 1042.4
+  "peak_rss_mb": 1376.2
 }

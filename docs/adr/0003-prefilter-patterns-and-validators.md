@@ -24,6 +24,13 @@ is also wasteful when most texts contain none of their literal prefixes.
   rejection for values assigned to secret-like keys.
 * Every pattern is **bounded** (no unbounded repetition), which streaming needs (ADR-0006).
 * Overlapping matches resolve by score, then length, then position, then catalog order.
+  Tagger spans that overlap a checksum or structure validated match (cards, IBANs, IP
+  addresses) are dropped before resolution, so a confident tagger span can neither relabel a
+  Luhn-valid card as a phone number nor cover part of an address and leave the rest visible. On
+  the ai4privacy validation split this moved exact-match micro F1 of the combined detector from
+  0.8750 to 0.8745; on Nemotron-PII (all 100,000 test documents) from 0.5619 to 0.5778. Raising
+  those patterns' scores instead was rejected: it let a card-shaped digit run inside a Slack
+  token win the overlap and leave the rest of the token visible.
 
 ## Alternatives considered
 
