@@ -1,0 +1,30 @@
+[package]
+name = "llm-dlp-guard-rs"
+version = "0.1.0"
+edition = "2021"
+description = "Rust core of llm-dlp-guard: pattern engine, validators, CRF tagger and the combined detector"
+license = "MIT"
+authors = ["Adeolu Ogunnoiki"]
+repository = "https://github.com/adeoluo/llm-dlp-guard"
+publish = false
+
+[lib]
+name = "llm_dlp_guard_rs"
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = []
+# Enabled by maturin (see pyproject.toml). Plain `cargo test` builds the core without Python.
+python = ["dep:pyo3"]
+
+[dependencies]
+pyo3 = { version = "0.30", optional = true, features = ["abi3-py311"] }
+aho-corasick = "1"
+rayon = "1.10"
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+lto = true
+codegen-units = 1
