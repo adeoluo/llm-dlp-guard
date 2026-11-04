@@ -47,7 +47,7 @@ def _fragments(seed: int) -> list[str]:
         "jane.doe@example.org", "4111 1111 1111 1111", "GB82 WEST 1234 5698 7654 32", "123-45-6789",
         "+44 20 7946 0958", "(415) 555-0100", "8.8.8.8", "10.0.0.1", "2001:db8::1", "fe80::1",
         "password=q8Zr2LmP0xTv9KcW", "token: abc", "postgres://u:p4ssW0rd@h/db", "AKIA", "eyJ", "@", ":",
-        "-", " ", "\n", "Zoë", "東京", "١٢٣", "Ⅻ", "ſecret", "İstanbul",
+        "-", " ", "\n", "Zoë", "東京", "١٢٣", "Ⅻ", "\u017fecret", "İstanbul",
     ]  # fmt: skip
     return out
 

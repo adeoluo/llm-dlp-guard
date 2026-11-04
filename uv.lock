@@ -575,6 +575,14 @@ wheels = [
 ]
 
 [[package]]
+name = "en-core-web-lg"
+version = "3.8.0"
+source = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl" }
+wheels = [
+    { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl", hash = "sha256:293e9547a655b25499198ab15a525b05b9407a75f10255e405e8c3854329ab63" },
+]
+
+[[package]]
 name = "filelock"
 version = "4.2.8"
 source = { registry = "https://pypi.org/simple" }
@@ -875,6 +883,7 @@ dependencies = [
 dev = [
     { name = "hypothesis" },
     { name = "mypy" },
+    { name = "pyarrow" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "ruff" },
@@ -885,6 +894,7 @@ rust = [
 ]
 validation = [
     { name = "detect-secrets" },
+    { name = "en-core-web-lg" },
     { name = "presidio-analyzer" },
     { name = "pyarrow" },
 ]
@@ -901,6 +911,7 @@ requires-dist = [
 dev = [
     { name = "hypothesis", specifier = ">=6.100" },
     { name = "mypy", specifier = ">=1.14" },
+    { name = "pyarrow", specifier = ">=15" },
     { name = "pytest", specifier = ">=8.0" },
     { name = "pytest-cov", specifier = ">=5.0" },
     { name = "ruff", specifier = ">=0.8" },
@@ -909,6 +920,7 @@ dev = [
 rust = [{ name = "maturin", specifier = ">=1.7,<2" }]
 validation = [
     { name = "detect-secrets", specifier = ">=1.5" },
+    { name = "en-core-web-lg", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl" },
     { name = "presidio-analyzer", specifier = ">=2.2" },
     { name = "pyarrow", specifier = ">=15" },
 ]

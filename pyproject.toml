@@ -24,6 +24,7 @@ dev = [
     "pytest-cov>=5.0",
     "hypothesis>=6.100",
     "types-pyyaml>=6.0",
+    "pyarrow>=15",
 ]
 # Rebuild the Rust core in place while editing it: make rust-develop
 rust = [
@@ -34,6 +35,8 @@ validation = [
     "detect-secrets>=1.5",
     "presidio-analyzer>=2.2",
     "pyarrow>=15",
+    # The spaCy model Presidio's default NLP engine loads.
+    "en-core-web-lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl",
 ]
 
 [build-system]
@@ -70,6 +73,8 @@ ignore = []
 # Regular expressions and secret-format templates read better unwrapped.
 "src/llm_dlp_guard/catalog.py" = ["E501"]
 "src/llm_dlp_guard/secrets_corpus.py" = ["E501"]
+# Test tables of inputs and expected outputs.
+"tests/*.py" = ["E501"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["llm_dlp_guard"]
