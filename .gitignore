@@ -40,3 +40,4 @@ rust/target/
 .pytest-tmp/
 .hypothesis/
 docs/demo/.sample/
+.frames/

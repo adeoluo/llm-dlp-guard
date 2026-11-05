@@ -58,3 +58,19 @@ def test_restore_inverts_tokenize(values: list[str]) -> None:
     assert len(set(tokens)) == len(set(values))
     for value, token in zip(values, tokens, strict=True):
         assert vault.original(token) == value
+
+
+@given(st.lists(st.integers(0, 255), min_size=4, max_size=4), st.binary(min_size=32, max_size=32))
+def test_ipv4_tokens_stay_valid_addresses(octets: list[int], key: bytes) -> None:
+    import ipaddress
+
+    value = ".".join(map(str, octets))
+    token = Vault(key).tokenize(value, "IP_ADDRESS")
+    ipaddress.IPv4Address(token)
+    assert [len(p) for p in token.split(".")] == [len(p) for p in value.split(".")]
+
+
+@given(st.sampled_from(["4111 1111 1111 1111", "5500-0000-0000-0004", "340000000000009"]))
+def test_card_tokens_keep_network_digit_and_luhn(card: str) -> None:
+    token = Vault().tokenize(card, "CREDIT_CARD")
+    assert token[0] == card[0] and luhn_valid(token) and token != card
