@@ -20,6 +20,9 @@ Category = Literal["pii", "secret"]
 # A terminator for tokens whose last character may be '-' or '/' (where \b fails).
 _END = r"(?:[^A-Za-z0-9_\-]|$)"
 _END64 = r"(?:[^A-Za-z0-9/+=]|$)"
+# First four digits of the major card networks: Visa, Mastercard (51-55, 2221-2720), Amex, Diners
+# and JCB (30, 36, 38, 35), Discover (6011, 644-649, 65) and UnionPay (62).
+_IIN = r"(?:4[0-9]{3}|5[1-5][0-9]{2}|2[2-7][0-9]{2}|3[0-9]{3}|6(?:011|2[0-9]{2}|4[4-9][0-9]|5[0-9]{2}))"
 
 
 @dataclass(frozen=True)
@@ -99,10 +102,14 @@ _PII = [
         "credit_card",
         "CREDIT_CARD",
         "pii",
-        r"\b(?:[0-9]{4}[ \-][0-9]{4}[ \-][0-9]{4}[ \-][0-9]{1,7}|[0-9]{4}[ \-][0-9]{6}[ \-][0-9]{5}|[0-9]{12,19})\b",
+        r"\b(?:"
+        + _IIN
+        + r"[ \-][0-9]{4}[ \-][0-9]{4}[ \-][0-9]{1,7}|3[47][0-9]{2}[ \-][0-9]{6}[ \-][0-9]{5}|"
+        + _IIN
+        + r"[0-9]{8,15})\b",
         0.9,
         validator="luhn",
-        description="13 to 19 digit card numbers that pass the Luhn check",
+        description="13 to 19 digit numbers with a card network prefix that pass the Luhn check",
     ),
     Pattern(
         "iban",

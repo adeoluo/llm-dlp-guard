@@ -53,6 +53,7 @@ POSITIVES = [
 
 NEGATIVES = [
     "card 4111 1111 1111 1112",
+    "account 883442237549304148",
     "ssn 666-45-6789",
     "version 1.02.3.4 and 999.1.1.1",
     "time 12:30:45",

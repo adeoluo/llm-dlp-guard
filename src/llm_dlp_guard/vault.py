@@ -2,8 +2,9 @@
 
 Each sensitive value is replaced by a token of the same shape (digits stay digits, letters keep
 their case, separators stay), drawn from HMAC-SHA256 under a per-vault random key. Card numbers
-keep a valid Luhn digit, IBANs keep their country and valid check digits, and email addresses
-keep the ``@`` and the top-level domain, so the model still sees well-formed data. The vault maps
+keep their leading network digit and a valid Luhn digit, IBANs keep their country and valid check
+digits, IPv4 addresses keep four in-range octets, and email addresses keep the ``@`` and the
+top-level domain, so the model still sees well-formed data. The vault maps
 tokens back to the original values so responses can be restored for the user. A vault lives for
 one conversation or one request; the key never leaves the process.
 """
@@ -54,6 +55,29 @@ def _fix_luhn(token: str) -> str:
         if luhn_valid("".join(chars)):
             break
     return "".join(chars)
+
+
+def _keep_first_digit(original: str, token: str) -> str:
+    i = next((k for k, c in enumerate(original) if c.isdigit()), None)
+    if i is None or i >= len(token):
+        return token
+    return token[:i] + original[i] + token[i + 1 :]
+
+
+_OCTET_RANGES = {1: (0, 9), 2: (10, 99), 3: (100, 255)}
+
+
+def _fix_ipv4(token: str) -> str:
+    """Map every dotted octet into the valid range for its digit count (so 992 becomes 1xx/2xx)."""
+
+    parts = token.split(".")
+    if len(parts) != 4 or not all(p.isdigit() and 1 <= len(p) <= 3 for p in parts):
+        return token
+    fixed = []
+    for p in parts:
+        lo, hi = _OCTET_RANGES[len(p)]
+        fixed.append(str(lo + int(p) % (hi - lo + 1)))
+    return ".".join(fixed)
 
 
 def _fix_iban(original: str, token: str) -> str:
@@ -119,7 +143,9 @@ class Vault:
         while True:
             token = _shape_preserving(value, _stream(self._key, label, value, counter))
             if label == "CREDIT_CARD":
-                token = _fix_luhn(token)
+                token = _fix_luhn(_keep_first_digit(value, token))
+            elif label == "IP_ADDRESS":
+                token = _fix_ipv4(token)
             elif label == "IBAN":
                 token = _fix_iban(value, token)
             elif label == "EMAIL":

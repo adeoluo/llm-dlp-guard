@@ -23,6 +23,11 @@ from llm_dlp_guard.catalog import Catalog
 from llm_dlp_guard.findings import NER_RANK, Finding, resolve
 
 _ASCII_LOWER = str.maketrans("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz")
+# Under IGNORECASE, Python's re also treats the Turkish dotted and dotless I as case variants of
+# 'i'; Rust's regex follows Unicode simple case folding, which does not. Matching runs on a copy
+# where they are swapped for letters of the same category with no ASCII case variant (offsets
+# are unchanged), and validators see the original text.
+_TURKIC_I = str.maketrans({"\u0130": "\u0100", "\u0131": "\u0101"})
 FNV_OFFSET = 0xCBF29CE484222325
 FNV_PRIME = 0x100000001B3
 MASK64 = (1 << 64) - 1
@@ -59,10 +64,11 @@ class ReferenceEngine:
         """Validated matches starting at or after ``start`` (earlier text is context)."""
 
         out: list[Finding] = []
+        haystack = text.translate(_TURKIC_I)
         for idx in self.active(text[start:]):
             p = self.catalog.patterns[idx]
             rx, group = self._compiled[idx]
-            for m in rx.finditer(text, start):
+            for m in rx.finditer(haystack, start):
                 s, e = m.span(group)
                 if s < 0 or s >= e:
                     continue

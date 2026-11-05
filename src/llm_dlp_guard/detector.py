@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
+from llm_dlp_guard import validators
 from llm_dlp_guard.backend import extension, resolve_backend
 from llm_dlp_guard.catalog import Catalog, default_catalog
 from llm_dlp_guard.findings import Finding, resolve
@@ -146,10 +147,18 @@ class Detector:
         assert self._engine is not None
         found = self._engine.candidates(text, start)
         if self.tagger is not None:
+            # Tagger spans never override a checksum or structure validated match.
+            structured = [
+                (f.start, f.end)
+                for f in found
+                if self.catalog.patterns[f.rank].validator in validators.STRUCTURED
+            ]
             found += [
-                _shift(f, start)
+                g
                 for f in self.tagger.predict(text[start:])
                 if f.score >= self.ner_min_score
+                for g in (_shift(f, start),)
+                if not any(s < g.end and g.start < e for s, e in structured)
             ]
         return found
 

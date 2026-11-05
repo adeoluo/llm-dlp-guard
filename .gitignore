@@ -39,3 +39,5 @@ rust/target/
 .pytest-tmp/
 .pytest-tmp/
 .hypothesis/
+docs/demo/.sample/
+.frames/

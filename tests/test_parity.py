@@ -199,3 +199,16 @@ def test_unicode_categories_assumption() -> None:
     # The excluded categories are exactly where the engines' word definitions can differ.
     assert unicodedata.category("\u0301") == "Mn"
     assert string.ascii_letters.isalpha()
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "İstanbulpassword=q8Zr2LmP0xTv9KcW",
+        "ap\u0131_key=q8Zr2LmP0xTv9KcW",
+        "Authorİzation: Bearer abc",
+    ],
+)
+def test_turkic_i_is_not_a_case_variant_of_i(text: str) -> None:
+    rust = Detector(backend="rust").candidates(text)
+    assert sorted(rust, key=repr) == sorted(Detector(backend="python").candidates(text), key=repr)

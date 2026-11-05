@@ -219,6 +219,15 @@ impl Engine {
         found
     }
 
+    /// Whether pattern `rank` is checked by a checksum or structure validator (cards, IBANs,
+    /// IP addresses); its matches take precedence over overlapping tagger spans.
+    pub fn is_structured(&self, rank: u32) -> bool {
+        self.patterns
+            .get(rank as usize)
+            .and_then(|c| c.spec.validator.as_deref())
+            .is_some_and(|v| validators::STRUCTURED.contains(&v))
+    }
+
     /// Resolved, non-overlapping findings sorted by start (character offsets).
     pub fn scan(&self, text: &str) -> Vec<Finding> {
         resolve(self.scan_candidates(text))
