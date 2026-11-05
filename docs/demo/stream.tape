@@ -19,7 +19,7 @@ Type `curl -sN localhost:18083/v1/chat/completions -d @$S/chat_stream.json | hea
 Sleep 3s
 Type `curl -sN localhost:18082/v1/chat/completions -d @$S/chat_stream.json | jq -rj --unbuffered -R 'select(startswith("data: {")) | .[6:] | fromjson | .choices[0].delta.content // ""'; echo` Enter
 Sleep 5s
-Type `python -m llm_dlp_guard stream $S/answer.txt --chunk 4 --delay 0.004` Enter
+Type `python -m llm_dlp_guard stream $S/answer.txt --chunk 4 --delay 0.004   # responses: secrets redacted, PII allowed back` Enter
 Sleep 8s
 Hide
 Type `kill %1 %2` Enter

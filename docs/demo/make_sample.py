@@ -31,9 +31,11 @@ def main() -> None:
     answer = (
         "Thanks for the details. The build log shows the job read "
         f"GITHUB_TOKEN={github} from the environment. Rotate it, then rerun.\n"
-        "I have also drafted the customer email; it is addressed to the account holder.\n"
+        "I have also drafted the customer email to bram.okafor@example.org; "
+        "it confirms the refund\n"
+        "to card 4111 1111 1111 1111 and asks him to call +44 20 7946 0958 with any questions.\n"
     )
-    (OUT / "answer.txt").write_text(answer * 3, encoding="utf-8")
+    (OUT / "answer.txt").write_text(answer, encoding="utf-8")
     chat = {"model": "echo", "messages": [{"role": "user", "content": prompt}]}
     (OUT / "chat.json").write_text(json.dumps(chat), encoding="utf-8")
     (OUT / "chat_stream.json").write_text(json.dumps({**chat, "stream": True}), encoding="utf-8")
