@@ -15,6 +15,10 @@ overlap (a prediction overlapping a gold span of its type).
   all 100,000.
 
 Presidio 2.2 runs with its default recognizers and spaCy ``en_core_web_lg``, default thresholds.
+
+Every micro score has a 95% percentile bootstrap interval over documents (1,000 resamples,
+seed 0), and each llm-dlp-guard row has a paired bootstrap interval of its F1 difference to
+Presidio on the same resampled documents.
 """
 
 from __future__ import annotations
@@ -72,11 +76,18 @@ def presidio() -> Callable[[str], Spans]:
     return run
 
 
+PerDoc = dict[str, list[metrics.Counts]]
+
+
 def evaluate(
-    records: list[Record], run: Callable[[str], Spans], scope: set[str]
+    records: list[Record], run: Callable[[str], Spans], scope: set[str], per_doc: PerDoc
 ) -> dict[str, object]:
+    """Exact and overlap scores; per-document micro counts are appended to ``per_doc``."""
+
     exact: dict[str, metrics.Counts] = {}
     overlap: dict[str, metrics.Counts] = {}
+    per_doc.setdefault("exact", [])
+    per_doc.setdefault("overlap", [])
     chars = 0
     with Timer() as t:
         preds = [run(r.text) for r in records]
@@ -84,8 +95,12 @@ def evaluate(
         chars += len(r.text.encode())
         pred = metrics.merge_adjacent(r.text, [p for p in pred if p[2] in scope])
         gold = metrics.merge_adjacent(r.text, r.spans)
-        metrics.accumulate(exact, metrics.score_document(gold, pred, "exact", r.ignore))
-        metrics.accumulate(overlap, metrics.score_document(gold, pred, "overlap", r.ignore))
+        doc_exact = metrics.score_document(gold, pred, "exact", r.ignore)
+        doc_overlap = metrics.score_document(gold, pred, "overlap", r.ignore)
+        metrics.accumulate(exact, doc_exact)
+        metrics.accumulate(overlap, doc_overlap)
+        per_doc["exact"].append(metrics.micro(doc_exact))
+        per_doc["overlap"].append(metrics.micro(doc_overlap))
     return {
         "documents": len(records),
         "seconds": round(t.seconds, 1),
@@ -99,6 +114,18 @@ def evaluate(
             "types": {k: v.to_dict() for k, v in sorted(overlap.items())},
         },
     }
+
+
+PRESIDIO = "Presidio 2.2 (default recognizers, en_core_web_lg)"
+
+
+def add_intervals(results: dict[str, dict[str, object]], per_doc: dict[str, PerDoc]) -> None:
+    """Bootstrap intervals for every system, paired against Presidio when it ran."""
+
+    for name, res in results.items():
+        for mode in ("exact", "overlap"):
+            other = per_doc[PRESIDIO][mode] if PRESIDIO in per_doc and name != PRESIDIO else None
+            res[mode]["ci95"] = metrics.bootstrap(per_doc[name][mode], other=other)  # type: ignore[index]
 
 
 def coarse_ai4privacy(records: list[Record]) -> list[Record]:
@@ -125,7 +152,7 @@ def main() -> None:
         ("llm-dlp-guard (patterns only)", ours(patterns)),
     ]
     if not args.skip_presidio:
-        systems.append(("Presidio 2.2 (default recognizers, en_core_web_lg)", presidio()))
+        systems.append((PRESIDIO, presidio()))
 
     out: dict[str, object] = {}
     english = coarse_ai4privacy(
@@ -133,8 +160,9 @@ def main() -> None:
     )
     scope = set(AI4PRIVACY_TO_COARSE.values())
     out["ai4privacy_en"] = {"records": len(english), "results": {}}
+    per_doc: dict[str, PerDoc] = {}
     for name, run in systems:
-        res = evaluate(english, run, scope)
+        res = evaluate(english, run, scope, per_doc.setdefault(name, {}))
         out["ai4privacy_en"]["results"][name] = res  # type: ignore[index]
         print(
             "ai4privacy",
@@ -144,6 +172,7 @@ def main() -> None:
             res["seconds"],
             flush=True,
         )  # type: ignore[index]
+    add_intervals(out["ai4privacy_en"]["results"], per_doc)  # type: ignore[index]
 
     nemotron = list(load_nemotron(Path(args.data) / "nemotron" / "test.parquet"))
     sample = random.Random(0).sample(nemotron, min(args.nemotron_sample, len(nemotron)))
@@ -154,8 +183,9 @@ def main() -> None:
         "seed": 0,
         "results": {},
     }
+    per_doc = {}
     for name, run in systems:
-        res = evaluate(sample, run, scope)
+        res = evaluate(sample, run, scope, per_doc.setdefault(name, {}))
         out["nemotron_sample"]["results"][name] = res  # type: ignore[index]
         print(
             "nemotron",
@@ -165,7 +195,11 @@ def main() -> None:
             res["seconds"],
             flush=True,
         )  # type: ignore[index]
-    full = evaluate(nemotron, ours(combined), scope)
+    add_intervals(out["nemotron_sample"]["results"], per_doc)  # type: ignore[index]
+    full_docs: PerDoc = {}
+    full = evaluate(nemotron, ours(combined), scope, full_docs)
+    full["exact"]["ci95"] = metrics.bootstrap(full_docs["exact"])  # type: ignore[index]
+    full["overlap"]["ci95"] = metrics.bootstrap(full_docs["overlap"])  # type: ignore[index]
     out["nemotron_full"] = {"documents": len(nemotron), "result": full}
     print("nemotron full", full["exact"]["micro"], full["overlap"]["micro"], flush=True)
     out["peak_rss_mb"] = round(peak_rss_mb(), 1)
