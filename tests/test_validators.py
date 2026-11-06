@@ -146,6 +146,10 @@ VALUES = [
     "${X}",
     "config.token",
     "q8Zr2LmP0xTv9KcW",
+    "jane.doe@example.org",
+    "jane..doe@example.org",
+    "jane@example.c0m",
+    "a@b",
     "",
 ]
 
@@ -174,3 +178,33 @@ def test_rust_entropy_matches_python(value: str) -> None:
 
 def test_rust_available_flag() -> None:
     assert isinstance(rust_available(), bool)
+
+
+@pytest.mark.parametrize(
+    ("value", "ok"),
+    [
+        ("jane.doe@example.org", True),
+        ("a+tag@mail.example.co.uk", True),
+        ("x@y.io", True),
+        ("jane..doe@example.org", False),
+        (".jane@example.org", False),
+        ("jane.@example.org", False),
+        ("jane@example..org", False),
+        ("jane@example.c0m", False),
+        ("jane@localhost", False),
+        ("@example.org", False),
+        ("a@b@example.org", False),
+        ("a" * 65 + "@example.org", False),
+        ("a@" + "b" * 250 + ".org", False),
+    ],
+)
+def test_email_valid(value: str, ok: bool) -> None:
+    assert v.email_valid(value) is ok
+    assert (v.check("email", value) is not None) is ok
+
+
+@given(
+    st.from_regex(r"[a-z0-9]{1,20}(\.[a-z0-9]{1,10})?@[a-z0-9]{1,15}\.[a-z]{2,6}", fullmatch=True)
+)
+def test_generated_emails_are_valid(value: str) -> None:
+    assert v.email_valid(value)

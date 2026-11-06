@@ -8,6 +8,7 @@ use std::net::Ipv6Addr;
 pub const VALIDATORS: &[&str] = &[
     "luhn",
     "iban",
+    "email",
     "ipv4",
     "ipv6",
     "jwt",
@@ -19,13 +20,14 @@ pub const VALIDATORS: &[&str] = &[
 ];
 
 /// Checksum and structure validators; their matches win overlaps with tagger spans.
-pub const STRUCTURED: &[&str] = &["luhn", "iban", "ipv4", "ipv6"];
+pub const STRUCTURED: &[&str] = &["luhn", "iban", "ipv4", "ipv6", "email"];
 
 /// Run validator `name` on `value`.
 pub fn check(name: &str, value: &str) -> Option<f64> {
     match name {
         "luhn" => luhn_valid(value).then_some(1.0),
         "iban" => iban_valid(value).then_some(1.0),
+        "email" => email_valid(value).then_some(1.0),
         "ipv4" => ipv4_factor(value),
         "ipv6" => ipv6_factor(value),
         "jwt" => jwt_valid(value).then_some(1.0),
@@ -188,6 +190,29 @@ pub fn iban_valid(value: &str) -> bool {
         };
     }
     remainder == 1
+}
+
+/// RFC 5321 length limits and dot rules: local part 1..=64 characters, address at most 254,
+/// no leading, trailing or doubled dots in either part, and an alphabetic top-level domain.
+pub fn email_valid(value: &str) -> bool {
+    if value.len() > 254 || value.matches('@').count() != 1 {
+        return false;
+    }
+    let (local, domain) = value.split_once('@').unwrap_or(("", ""));
+    if local.is_empty() || local.chars().count() > 64 || domain.is_empty() {
+        return false;
+    }
+    for part in [local, domain] {
+        if part.starts_with('.') || part.ends_with('.') || part.contains("..") {
+            return false;
+        }
+    }
+    let labels: Vec<&str> = domain.split('.').collect();
+    labels.len() >= 2
+        && labels.iter().all(|l| !l.is_empty())
+        && labels
+            .last()
+            .is_some_and(|t| t.chars().all(|c| c.is_ascii_alphabetic()))
 }
 
 /// Dotted-quad IPv4: 1.0 for a public address, 0.6 for private, loopback, link-local, shared,
@@ -437,6 +462,18 @@ pub fn secret_value_factor(value: &str) -> Option<f64> {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn email_rules() {
+        use super::email_valid;
+        assert!(email_valid("jane.doe@example.org"));
+        assert!(email_valid("a+b@mail.example.co.uk"));
+        assert!(!email_valid("jane..doe@example.org"));
+        assert!(!email_valid(".jane@example.org"));
+        assert!(!email_valid("jane@example.c0m"));
+        assert!(!email_valid("jane@localhost"));
+        assert!(!email_valid(&format!("{}@example.org", "a".repeat(65))));
+    }
+
     use super::*;
 
     #[test]

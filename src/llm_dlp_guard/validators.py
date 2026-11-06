@@ -72,6 +72,25 @@ def iban_valid(value: str) -> bool:
     return remainder == 1
 
 
+def email_valid(value: str) -> bool:
+    """RFC 5321 length limits and dot rules on top of the pattern's character classes.
+
+    The local part has at most 64 characters, the address at most 254, neither part starts or
+    ends with a dot or holds two dots in a row, and the top-level domain is alphabetic.
+    """
+
+    if value.count("@") != 1 or len(value) > 254:
+        return False
+    local, domain = value.split("@")
+    if not 0 < len(local) <= 64 or not domain:
+        return False
+    for part in (local, domain):
+        if part.startswith(".") or part.endswith(".") or ".." in part:
+            return False
+    labels = domain.split(".")
+    return len(labels) >= 2 and all(labels) and labels[-1].isascii() and labels[-1].isalpha()
+
+
 def ipv4_factor(value: str) -> float | None:
     """1.0 for a public address, 0.6 for reserved ranges, ``None`` if invalid."""
 
@@ -273,6 +292,7 @@ def _flag(ok: bool) -> float | None:
 VALIDATORS: dict[str, Callable[[str], float | None]] = {
     "luhn": lambda v: _flag(luhn_valid(v)),
     "iban": lambda v: _flag(iban_valid(v)),
+    "email": lambda v: _flag(email_valid(v)),
     "ipv4": ipv4_factor,
     "ipv6": ipv6_factor,
     "jwt": lambda v: _flag(jwt_valid(v)),
@@ -284,7 +304,7 @@ VALIDATORS: dict[str, Callable[[str], float | None]] = {
 }
 
 # Checksum and structure validators; their matches win overlaps with tagger spans.
-STRUCTURED = frozenset({"luhn", "iban", "ipv4", "ipv6"})
+STRUCTURED = frozenset({"luhn", "iban", "ipv4", "ipv6", "email"})
 
 
 def check(name: str, value: str) -> float | None:
