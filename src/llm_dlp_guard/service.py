@@ -298,6 +298,15 @@ def make_handler(app: App, max_body: int = MAX_BODY) -> type[BaseHTTPRequestHand
         def do_POST(self) -> None:
             length = int(self.headers.get("Content-Length") or 0)
             if length > max_body:
+                # Discard a bounded amount of the body first: closing a socket with unread input
+                # makes the kernel send a reset, which can reach the client before the 413 does.
+                remaining = min(length, 16 * max_body)
+                while remaining > 0:
+                    got = self.rfile.read(min(remaining, 65_536))
+                    if not got:
+                        break
+                    remaining -= len(got)
+                self.close_connection = True
                 self._send(_json_response(413, {"error": {"message": "body too large"}}))
                 return
             body = self.rfile.read(length)
