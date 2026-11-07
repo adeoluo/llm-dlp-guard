@@ -163,11 +163,11 @@ python -m llm_dlp_guard train-tagger --data DIR --out tagger.crf        # train 
 from llm_dlp_guard import Guard, Policy, Tagger, Vault, redact_stream
 
 guard = Guard(Policy.load("policy.yaml"), Tagger.load("tagger.crf"))
-vault = Vault()                                    # one per conversation
+vault = Vault()  # one per conversation
 prompt = guard.process(user_text, "prompt", vault)
 if prompt.outcome == "block":
     raise PermissionError([a.finding.label for a in prompt.blocked])
-answer = call_model(prompt.text)                   # the provider sees tokens, not values
+answer = call_model(prompt.text)  # the provider sees tokens, not values
 print(guard.process(answer, "response", vault).text)  # tokens restored, secrets stay redacted
 
 for piece in redact_stream(guard, token_iterator, "response", vault):
