@@ -3,9 +3,10 @@
     "platform": "macOS-27.0.1-arm64-arm-64bit",
     "processor": "Apple M1",
     "cpus": 8,
-    "python": "3.12.14"
+    "python": "3.12.14",
+    "load_average_1m": 24.57
   },
-  "written": "2026-11-04 17:36:38",
+  "written": "2026-11-06 18:29:39",
   "documents": 101378,
   "megabytes": 14.56,
   "slow_engine_documents": 3000,
@@ -13,52 +14,263 @@
     "llm-dlp-guard patterns, Rust, 1 thread": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 0.66,
-      "mb_per_second": 21.997
+      "seconds": 3.33,
+      "mb_per_second": 4.377,
+      "runs": 3,
+      "mb_per_second_min": 3.889,
+      "mb_per_second_max": 4.604
     },
     "llm-dlp-guard patterns, Rust, batch on 8 threads": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 0.36,
-      "mb_per_second": 40.771
+      "seconds": 0.63,
+      "mb_per_second": 23.147,
+      "runs": 3,
+      "mb_per_second_min": 17.509,
+      "mb_per_second_max": 26.504
     },
     "llm-dlp-guard patterns + tagger, Rust, 1 thread": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 9.12,
-      "mb_per_second": 1.595
+      "seconds": 44.98,
+      "mb_per_second": 0.324,
+      "runs": 3,
+      "mb_per_second_min": 0.3,
+      "mb_per_second_max": 0.327
     },
     "llm-dlp-guard patterns + tagger, Rust, batch on 8 threads": {
       "documents": 101378,
       "mb": 14.556,
-      "seconds": 2.34,
-      "mb_per_second": 6.23
+      "seconds": 10.13,
+      "mb_per_second": 1.437,
+      "runs": 3,
+      "mb_per_second_min": 0.681,
+      "mb_per_second_max": 1.705
     },
     "llm-dlp-guard patterns, Python reference": {
       "documents": 3000,
       "mb": 0.561,
-      "seconds": 0.2,
-      "mb_per_second": 2.869
+      "seconds": 1.72,
+      "mb_per_second": 0.326
     },
     "Presidio 2.2 analyze (en_core_web_lg)": {
       "documents": 1500,
       "mb": 0.297,
-      "seconds": 9.82,
-      "mb_per_second": 0.03
+      "seconds": 64.33,
+      "mb_per_second": 0.005
     },
     "detect-secrets 1.5 line scan": {
       "documents": 3000,
       "mb": 0.561,
-      "seconds": 1.89,
-      "mb_per_second": 0.297
+      "seconds": 9.82,
+      "mb_per_second": 0.057
+    }
+  },
+  "thread_scaling": {
+    "patterns": {
+      "1": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 3.95,
+        "mb_per_second": 3.687,
+        "runs": 3,
+        "mb_per_second_min": 2.533,
+        "mb_per_second_max": 3.841
+      },
+      "2": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 2.42,
+        "mb_per_second": 6.004,
+        "runs": 3,
+        "mb_per_second_min": 5.911,
+        "mb_per_second_max": 6.393
+      },
+      "4": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 1.59,
+        "mb_per_second": 9.145,
+        "runs": 3,
+        "mb_per_second_min": 8.106,
+        "mb_per_second_max": 10.346
+      },
+      "8": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 1.23,
+        "mb_per_second": 11.853,
+        "runs": 3,
+        "mb_per_second_min": 9.103,
+        "mb_per_second_max": 12.479
+      }
+    },
+    "patterns + tagger": {
+      "1": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 64.62,
+        "mb_per_second": 0.225,
+        "runs": 3,
+        "mb_per_second_min": 0.218,
+        "mb_per_second_max": 0.234
+      },
+      "2": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 37.47,
+        "mb_per_second": 0.389,
+        "runs": 3,
+        "mb_per_second_min": 0.378,
+        "mb_per_second_max": 0.418
+      },
+      "4": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 20.67,
+        "mb_per_second": 0.704,
+        "runs": 3,
+        "mb_per_second_min": 0.656,
+        "mb_per_second_max": 0.705
+      },
+      "8": {
+        "documents": 101378,
+        "mb": 14.556,
+        "seconds": 14.63,
+        "mb_per_second": 0.995,
+        "runs": 3,
+        "mb_per_second_min": 0.937,
+        "mb_per_second_max": 1.07
+      }
+    }
+  },
+  "document_size_scaling": {
+    "patterns": {
+      "1 KB": {
+        "documents": 13297,
+        "mb": 14.644,
+        "seconds": 4.87,
+        "mb_per_second": 3.007,
+        "runs": 3,
+        "mb_per_second_min": 2.916,
+        "mb_per_second_max": 3.119
+      },
+      "16 KB": {
+        "documents": 911,
+        "mb": 14.657,
+        "seconds": 5.54,
+        "mb_per_second": 2.646,
+        "runs": 3,
+        "mb_per_second_min": 2.299,
+        "mb_per_second_max": 3.428
+      },
+      "256 KB": {
+        "documents": 58,
+        "mb": 14.658,
+        "seconds": 8.71,
+        "mb_per_second": 1.682,
+        "runs": 3,
+        "mb_per_second_min": 1.599,
+        "mb_per_second_max": 2.567
+      },
+      "4000 KB": {
+        "documents": 4,
+        "mb": 14.658,
+        "seconds": 9.08,
+        "mb_per_second": 1.614,
+        "runs": 3,
+        "mb_per_second_min": 1.265,
+        "mb_per_second_max": 1.664
+      }
+    },
+    "patterns + tagger": {
+      "1 KB": {
+        "documents": 13297,
+        "mb": 14.644,
+        "seconds": 59.53,
+        "mb_per_second": 0.246
+      },
+      "16 KB": {
+        "documents": 911,
+        "mb": 14.657,
+        "seconds": 60.61,
+        "mb_per_second": 0.242
+      },
+      "256 KB": {
+        "documents": 58,
+        "mb": 14.658,
+        "seconds": 59.06,
+        "mb_per_second": 0.248
+      },
+      "4000 KB": {
+        "documents": 4,
+        "mb": 14.658,
+        "seconds": 50.64,
+        "mb_per_second": 0.289
+      }
     }
   },
   "streaming_patterns_only": {
+    "chunk_chars": 4,
     "chunks": 115998,
-    "median_ms": 0.007,
-    "p99_ms": 0.0325,
+    "median_ms": 0.0176,
+    "p99_ms": 0.5913,
+    "max_ms": 60.899,
+    "chars_per_second": 51558,
     "window_chars": 342,
     "max_held_chars": 384
   },
-  "peak_rss_mb": 1043.4
+  "streaming_chunk_sweep": {
+    "1": {
+      "chunk_chars": 1,
+      "chunks": 463709,
+      "median_ms": 0.0162,
+      "p99_ms": 0.2354,
+      "max_ms": 257.568,
+      "chars_per_second": 20591,
+      "window_chars": 342,
+      "max_held_chars": 384
+    },
+    "4": {
+      "chunk_chars": 4,
+      "chunks": 115998,
+      "median_ms": 0.0163,
+      "p99_ms": 0.0917,
+      "max_ms": 31.245,
+      "chars_per_second": 91967,
+      "window_chars": 342,
+      "max_held_chars": 384
+    },
+    "16": {
+      "chunk_chars": 16,
+      "chunks": 29070,
+      "median_ms": 0.0172,
+      "p99_ms": 0.1072,
+      "max_ms": 30.714,
+      "chars_per_second": 208321,
+      "window_chars": 342,
+      "max_held_chars": 380
+    },
+    "64": {
+      "chunk_chars": 64,
+      "chunks": 7346,
+      "median_ms": 0.0216,
+      "p99_ms": 0.1315,
+      "max_ms": 15.773,
+      "chars_per_second": 380938,
+      "window_chars": 342,
+      "max_held_chars": 372
+    }
+  },
+  "streaming_with_tagger": {
+    "chunk_chars": 4,
+    "chunks": 31064,
+    "median_ms": 0.473,
+    "p99_ms": 10.6184,
+    "max_ms": 77.581,
+    "chars_per_second": 4556,
+    "window_chars": 342,
+    "max_held_chars": 375
+  },
+  "peak_rss_mb": 520.5
 }
