@@ -1,0 +1,56 @@
+# Llm Dlp Guard
+
+> Data loss prevention for LLM traffic: PII, secrets and credentials in prompts and outputs
+
+Languages: Python, Rust. License: MIT. Source: https://github.com/adeoluo/llm-dlp-guard
+
+## Docs
+
+- [README](https://github.com/adeoluo/llm-dlp-guard/blob/main/README.md): motivation, architecture, results, quickstart, design decisions, evaluation, responsible ai, limitations, roadmap
+- [AGENTS.md](https://github.com/adeoluo/llm-dlp-guard/blob/main/AGENTS.md): layout, commands and conventions for changing the code
+- [Architecture diagram](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/architecture/architecture.mmd): Mermaid source of the component diagram
+- [Architecture](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/ARCHITECTURE.md)
+- [Data Card - LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/DATA_CARD.md)
+- [Definition of Done](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/DEFINITION_OF_DONE.md)
+- [Evaluation Report - Llm Dlp Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/EVALUATION_REPORT.md)
+- [Model / System Card - LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/MODEL_CARD.md)
+- [Threat Model - LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/THREAT_MODEL.md)
+- [ADR-0001: Record architecture decisions](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0001-record-architecture-decisions.md)
+- [ADR-0002: A Rust core with a Python reference and parity tests](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0002-rust-core-with-python-reference.md)
+- [ADR-0003: An anchor prefilter, bounded patterns and validators for precision](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0003-prefilter-patterns-and-validators.md)
+- [ADR-0004: A linear-chain CRF over hashed features for free-form PII](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0004-crf-tagger.md)
+- [ADR-0005: Reversible redaction with format-preserving tokens in a per-request vault](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0005-format-preserving-vault.md)
+- [ADR-0006: Streaming redaction that equals whole-text redaction](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0006-exact-streaming.md)
+- [ADR-0007: Evaluation protocol](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0007-evaluation-protocol.md)
+- [ADR-NNNN: <short title>](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/template.md)
+- [Changelog](https://github.com/adeoluo/llm-dlp-guard/blob/main/CHANGELOG.md): release history
+
+## Source
+
+- [rust/src/crf.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/crf.rs): Linear-chain CRF tagger over hashed token features, with BIO tags.
+- [rust/src/detector.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/detector.rs): Patterns and the tagger combined into one detector, with parallel batch scanning.
+- [rust/src/engine.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/engine.rs): The pattern engine: an Aho-Corasick pass over every pattern's literal anchors decides which regular expressions run; matches are validated, scored and resolved to non-overlapping spans.
+- [rust/src/finding.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/finding.rs): Findings, offset conversion and overlap resolution shared by every detector.
+- [rust/src/lib.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/lib.rs): Rust core of llm-dlp-guard.
+- [rust/src/python.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/python.rs): PyO3 bindings, built by maturin into `llm_dlp_guard.llm_dlp_guard_rs`.
+- [rust/src/tokenize.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/tokenize.rs): Tokenizer shared by the tagger: runs of alphanumeric characters (and `_`) form one token, every other non-space character is a token of its own, whitespace separates.
+- [rust/src/validators.rs](https://github.com/adeoluo/llm-dlp-guard/blob/main/rust/src/validators.rs): Validators run on a candidate match.
+- [src/llm_dlp_guard/__init__.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/__init__.py): Data loss prevention for LLM traffic: PII, secrets and credentials in prompts and outputs.
+- [src/llm_dlp_guard/backend.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/backend.py): The Rust backend, compiled into the package on install and used by default.
+- [src/llm_dlp_guard/catalog.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/catalog.py): The pattern catalog: one regular expression per format, with anchors and validators.
+- [src/llm_dlp_guard/cli.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/cli.py): Command line: ``python -m llm_dlp_guard <command>``.
+- [src/llm_dlp_guard/configuration.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/configuration.py): Service settings from ``DLP_*`` environment variables (or a ``.env`` file).
+- [src/llm_dlp_guard/datasets.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/datasets.py): Loaders for the public PII datasets and the label maps used in evaluation.
+- [src/llm_dlp_guard/detector.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/detector.py): The detector: the pattern catalog plus an optional CRF tagger, on the Rust or Python backend.
+- [src/llm_dlp_guard/findings.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/findings.py): The finding record and overlap resolution.
+- [src/llm_dlp_guard/guard.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/guard.py): The guard: detection, policy decisions and redaction for one direction of LLM traffic.
+- [src/llm_dlp_guard/metrics.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/metrics.py): Entity-level precision, recall and F1 for character spans.
+- [src/llm_dlp_guard/mock_llm.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/mock_llm.py): A local OpenAI-compatible echo model for demos and tests (no network, no weights).
+- [src/llm_dlp_guard/observability.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/observability.py): Thread-safe metrics in the Prometheus text format.
+- [src/llm_dlp_guard/policy.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/policy.py): The policy engine: what to do with each finding, per direction.
+- [src/llm_dlp_guard/reference.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/reference.py): Python reference implementation of the Rust core.
+- [src/llm_dlp_guard/secrets_corpus.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/secrets_corpus.py): A labelled corpus of credentials in real formats with random (fake) values.
+- [src/llm_dlp_guard/service.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/service.py): HTTP service: scanning endpoints and an OpenAI-compatible proxy that guards both directions.
+- [src/llm_dlp_guard/streaming.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/streaming.py): Streaming redaction for token streams and server-sent events.
+- [src/llm_dlp_guard/validators.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/validators.py): Validators, the Python reference for ``rust/src/validators.rs``.
+- [src/llm_dlp_guard/vault.py](https://github.com/adeoluo/llm-dlp-guard/blob/main/src/llm_dlp_guard/vault.py): Reversible redaction: a vault of format-preserving tokens.
