@@ -136,7 +136,66 @@ prefix, and many passwords appear in prose rather than after a keyword.
 
 ## Throughput
 
-THROUGHPUT_REPORT
+Text: 101,378 documents, 14.6 MB (the 81,379 ai4privacy validation records interleaved with
+20,000 generated secrets documents, seed 1). Every Rust row is the median of three full passes;
+the minimum and maximum are kept in `benchmarks/results/throughput.json`. The Python reference
+and detect-secrets ran on the first 3,000 documents, Presidio on the 1,500 ASCII documents among
+them. The machine was shared and busy (load average 18.0 when the file was written; an earlier
+run in the same session at load 24.6 measured a third to a half of these rates), so the spread between
+passes is wide and the absolute values are lower bounds for an idle M1.
+
+| Engine | Documents | MB/s median | MB/s min | MB/s max |
+|---|---:|---:|---:|---:|
+| Patterns, Rust, 1 thread | 101,378 | 11.04 | 7.70 | 11.75 |
+| Patterns, Rust, batch on 8 threads | 101,378 | 35.71 | 19.89 | 40.06 |
+| Patterns + tagger, Rust, 1 thread | 101,378 | 0.728 | 0.349 | 0.935 |
+| Patterns + tagger, Rust, batch on 8 threads | 101,378 | 3.89 | 3.75 | 4.04 |
+| Patterns, Python reference | 3,000 | 1.89 | | |
+| detect-secrets 1.5 line scan | 3,000 | 0.195 | | |
+| Presidio 2.2 analyze (`en_core_web_lg`) | 1,500 | 0.004 | | |
+
+Every configuration of this package is faster than both reference tools on the same text.
+Presidio is slower here than in the PII comparison (0.018 to 0.022 MB/s) because this mix
+includes long secret strings.
+
+**Thread scaling** (batch API, median of three, MB/s):
+
+| Threads | Patterns | Patterns + tagger |
+|---:|---:|---:|
+| 1 | 9.96 | 0.76 |
+| 2 | 12.11 | 1.15 |
+| 4 | 15.53 | 1.89 |
+| 8 | 39.27 | 2.35 |
+
+The tagger path scales 3.1x from 1 to 8 threads. The pattern path is too short (under 1.5 s per
+pass) to separate scaling from load noise: its 2- and 4-thread passes ranged from 7.0 to 20.8 and
+15.5 to 37.8 MB/s.
+
+**Document size** (same text joined into larger documents, 1 thread, MB/s):
+
+| Target size | Documents | Patterns | Patterns + tagger |
+|---:|---:|---:|---:|
+| 1 KB | 13,297 | 11.95 | 0.70 |
+| 16 KB | 911 | 8.35 | 0.68 |
+| 256 KB | 58 | 7.23 | 0.31 |
+| 4 MB | 4 | 4.85 | 0.39 |
+
+Throughput falls as documents grow. The cause has not been profiled yet; the proxy scans one
+message at a time, where documents are small.
+
+**Streaming** (patterns only, 200 answers of 12 records each):
+
+| Chunk (chars) | Chunks | Median ms per chunk | p99 ms | Max ms | Chars/s | Max held chars |
+|---:|---:|---:|---:|---:|---:|---:|
+| 1 | 463,709 | 0.0090 | 0.125 | 9.9 | 52,639 | 384 |
+| 4 | 115,998 | 0.0096 | 0.084 | 1.1 | 223,453 | 384 |
+| 16 | 29,070 | 0.0116 | 0.153 | 2.1 | 438,635 | 380 |
+| 64 | 7,346 | 0.0159 | 0.170 | 1.4 | 745,435 | 372 |
+
+The held-back text never exceeds the 342-character window plus one chunk. With the tagger
+(first 50 answers, 4-character chunks) the median is 0.37 ms per chunk, p99 2.25 ms, 8,381
+chars/s, which is still well above the rate a model emits tokens. Peak resident memory for the
+whole benchmark was 496 MB.
 
 ## Threats to validity
 

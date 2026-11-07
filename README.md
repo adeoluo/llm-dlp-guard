@@ -120,7 +120,30 @@ llm-dlp-guard 0.189 at precision 0.809, detect-secrets 0.175 (`.yaml`) and 0.071
 
 ### Throughput
 
-THROUGHPUT_TABLE
+101,378 documents (the 81,379 ai4privacy validation records interleaved with 20,000 generated
+secrets documents, 14.6 MB), scanned one document at a time unless marked batch. Rust rows are
+the median of three full passes with the slowest and fastest pass in brackets; the slow engines
+ran on the first 3,000 documents (Presidio on the 1,500 ASCII ones). The machine was heavily
+shared during this run (load average 18 when the file was written), so read the ratios rather
+than the absolute values. Reproduce: `make bench-throughput`.
+
+| Engine | MB/s (min to max) | vs Presidio |
+|---|---:|---:|
+| Patterns, Rust, batch on 8 threads | **35.7** (19.9 to 40.1) | win |
+| Patterns, Rust, 1 thread | 11.0 (7.7 to 11.8) | win |
+| Patterns + tagger, Rust, batch on 8 threads | 3.89 (3.75 to 4.04) | win |
+| Patterns + tagger, Rust, 1 thread | 0.73 (0.35 to 0.94) | win |
+| Patterns, Python reference (parity only) | 1.89 | win |
+| detect-secrets 1.5 line scan | 0.195 | |
+| Presidio 2.2 analyze (`en_core_web_lg`) | 0.004 | |
+
+Batch throughput with 1, 2, 4 and 8 threads: 10.0, 12.1, 15.5 and 39.3 MB/s for patterns, 0.76,
+1.15, 1.89 and 2.35 MB/s with the tagger. Joining the same text into larger documents lowers
+single-thread pattern throughput from 11.9 MB/s at 1 KB to 4.8 MB/s at 4 MB. The stream redactor
+(patterns, 4-character chunks) adds a median 0.010 ms per chunk (p99 0.084 ms) and never holds
+back more than 384 characters; with the tagger the median is 0.37 ms per chunk. Presidio's rate
+here is lower than the 0.018 to 0.022 MB/s it reached on PII-only text in the comparison above,
+because this mix includes the long secret strings. Peak memory 496 MB.
 
 ## Quickstart
 
@@ -236,7 +259,7 @@ Streaming redaction: raw SSE events, the redacted and restored stream through th
   Aho-Corasick pass and bounded repetitions; checksums and structure checks carry precision
   ([ADR-0003](docs/adr/0003-prefilter-patterns-and-validators.md)).
 - **A CRF, not a transformer.** A linear-chain CRF over 19 hashed features trains on the full
-  325k-record split in under 4 minutes on a CPU and tags at about 1 MB/s per core
+  325k-record split in under 4 minutes on a CPU and tags at about 0.7 MB/s on one core of the shared M1
   ([ADR-0004](docs/adr/0004-crf-tagger.md)).
 - **Reversible, format-preserving tokens.** Tokens keep the shape of the value (a card stays a
   Luhn-valid card number, an email stays an email) and are keyed per request
