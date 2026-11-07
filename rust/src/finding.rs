@@ -1,6 +1,7 @@
 //! Findings, offset conversion and overlap resolution shared by every detector.
 
 use std::cmp::Ordering;
+use std::collections::BTreeMap;
 
 /// Rank given to tagger findings; pattern findings use their catalog index.
 pub const NER_RANK: u32 = 1_000_000;
@@ -62,17 +63,24 @@ pub fn resolve(mut candidates: Vec<Finding>) -> Vec<Finding> {
         return candidates;
     }
     candidates.sort_by(priority);
-    // `kept` stays sorted by start; spans in it never overlap.
-    let mut kept: Vec<Finding> = Vec::with_capacity(candidates.len());
+    // Kept spans never overlap, so `(start, end)` keys are distinct and ordered by start; the
+    // ordered map finds both neighbours of a candidate in logarithmic time (a sorted vector
+    // makes every insertion linear, which is quadratic on long documents with many findings).
+    let mut kept: BTreeMap<(usize, usize), Finding> = BTreeMap::new();
     for cand in candidates {
-        let idx = kept.partition_point(|f| f.start < cand.start);
-        let clash_prev = idx > 0 && kept[idx - 1].end > cand.start;
-        let clash_next = idx < kept.len() && kept[idx].start < cand.end;
+        let clash_prev = kept
+            .range(..(cand.start, 0))
+            .next_back()
+            .is_some_and(|(_, f)| f.end > cand.start);
+        let clash_next = kept
+            .range((cand.start, 0)..)
+            .next()
+            .is_some_and(|(_, f)| f.start < cand.end);
         if !clash_prev && !clash_next {
-            kept.insert(idx, cand);
+            kept.insert((cand.start, cand.end), cand);
         }
     }
-    kept
+    kept.into_values().collect()
 }
 
 #[cfg(test)]

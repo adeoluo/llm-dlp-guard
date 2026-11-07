@@ -14,7 +14,7 @@ use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::finding::{bytes_to_chars, Finding, NER_RANK};
-use crate::tokenize::{is_space, tokenize};
+use crate::tokenize::{is_space, tokenize, windows, WINDOW_CHARS};
 
 /// A character-offset span `(start, end, label)`.
 pub type Span = (usize, usize, String);
@@ -623,8 +623,27 @@ impl Crf {
         self.viterbi(&self.lattice(&feats, tokens.len()))
     }
 
-    /// Entity spans (character offsets) with their mean token marginal as score.
+    /// Entity spans (character offsets) with their mean token marginal as score. Long texts are
+    /// decoded window by window (see `tokenize::windows`) so memory stays bounded.
     pub fn predict(&self, text: &str) -> Vec<Finding> {
+        let mut out = Vec::new();
+        for (start, end, chars) in windows(text, WINDOW_CHARS) {
+            out.extend(
+                self.predict_window(&text[start..end])
+                    .into_iter()
+                    .map(|mut f| {
+                        f.start += chars;
+                        f.end += chars;
+                        f.match_start += chars;
+                        f.match_end += chars;
+                        f
+                    }),
+            );
+        }
+        out
+    }
+
+    fn predict_window(&self, text: &str) -> Vec<Finding> {
         let tokens = tokenize(text);
         if tokens.is_empty() {
             return Vec::new();

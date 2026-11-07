@@ -5,7 +5,7 @@
     "cpus": 8,
     "python": "3.12.14"
   },
-  "written": "2026-11-04 17:30:42",
+  "written": "2026-11-04 20:12:35",
   "dataset": "ai4privacy/pii-masking-400k",
   "train_records": 325517,
   "validation_records": 81379,
@@ -51,7 +51,7 @@
   "ner_min_score": 0.5,
   "train_seconds": 229.1,
   "model_bytes": 243623530,
-  "peak_rss_mb": 516.7,
+  "peak_rss_mb": 645.7,
   "results": {
     "tagger": {
       "micro": {
@@ -268,7 +268,7 @@
           "f1": 0.848
         }
       },
-      "seconds": 7.5
+      "seconds": 7.8
     },
     "tagger_no_floor": {
       "micro": {
@@ -485,7 +485,7 @@
           "f1": 0.8518
         }
       },
-      "seconds": 7.4
+      "seconds": 7.9
     },
     "patterns": {
       "micro": {
@@ -607,14 +607,14 @@
     },
     "combined": {
       "micro": {
-        "tp": 74616,
-        "fp": 7220,
-        "fn": 14194,
-        "precision": 0.9118,
-        "recall": 0.8402,
-        "f1": 0.8745
+        "tp": 74526,
+        "fp": 7307,
+        "fn": 14284,
+        "precision": 0.9107,
+        "recall": 0.8392,
+        "f1": 0.8735
       },
-      "macro_f1": 0.8649,
+      "macro_f1": 0.8642,
       "labels": {
         "ACCOUNT_NUMBER": {
           "tp": 2658,
@@ -635,12 +635,12 @@
           "support": 3599
         },
         "CITY": {
-          "tp": 7245,
+          "tp": 7244,
           "fp": 295,
-          "fn": 833,
+          "fn": 834,
           "precision": 0.9609,
-          "recall": 0.8969,
-          "f1": 0.9278,
+          "recall": 0.8968,
+          "f1": 0.9277,
           "support": 8078
         },
         "CREDIT_CARD": {
@@ -671,12 +671,12 @@
           "support": 2483
         },
         "EMAIL": {
-          "tp": 7693,
-          "fp": 40,
-          "fn": 28,
-          "precision": 0.9948,
-          "recall": 0.9964,
-          "f1": 0.9956,
+          "tp": 7608,
+          "fp": 129,
+          "fn": 113,
+          "precision": 0.9833,
+          "recall": 0.9854,
+          "f1": 0.9843,
           "support": 7721
         },
         "GIVEN_NAME": {
@@ -752,12 +752,12 @@
           "support": 2609
         },
         "USERNAME": {
-          "tp": 8042,
-          "fp": 81,
-          "fn": 524,
-          "precision": 0.99,
-          "recall": 0.9388,
-          "f1": 0.9637,
+          "tp": 8038,
+          "fp": 79,
+          "fn": 528,
+          "precision": 0.9903,
+          "recall": 0.9384,
+          "f1": 0.9636,
           "support": 8566
         },
         "ZIP_CODE": {
@@ -772,55 +772,55 @@
       },
       "languages": {
         "de": {
-          "tp": 14912,
-          "fp": 1345,
-          "fn": 2694,
-          "precision": 0.9173,
-          "recall": 0.847,
-          "f1": 0.8807
+          "tp": 14895,
+          "fp": 1362,
+          "fn": 2711,
+          "precision": 0.9162,
+          "recall": 0.846,
+          "f1": 0.8797
         },
         "en": {
-          "tp": 15941,
-          "fp": 2021,
-          "fn": 4258,
-          "precision": 0.8875,
-          "recall": 0.7892,
-          "f1": 0.8355
+          "tp": 15925,
+          "fp": 2035,
+          "fn": 4274,
+          "precision": 0.8867,
+          "recall": 0.7884,
+          "f1": 0.8347
         },
         "es": {
-          "tp": 7917,
-          "fp": 661,
-          "fn": 1142,
-          "precision": 0.9229,
-          "recall": 0.8739,
-          "f1": 0.8978
+          "tp": 7906,
+          "fp": 671,
+          "fn": 1153,
+          "precision": 0.9218,
+          "recall": 0.8727,
+          "f1": 0.8966
         },
         "fr": {
-          "tp": 15058,
-          "fp": 1255,
-          "fn": 2187,
-          "precision": 0.9231,
-          "recall": 0.8732,
-          "f1": 0.8974
+          "tp": 15044,
+          "fp": 1269,
+          "fn": 2201,
+          "precision": 0.9222,
+          "recall": 0.8724,
+          "f1": 0.8966
         },
         "it": {
-          "tp": 14037,
-          "fp": 1216,
-          "fn": 2087,
-          "precision": 0.9203,
-          "recall": 0.8706,
-          "f1": 0.8947
+          "tp": 14017,
+          "fp": 1236,
+          "fn": 2107,
+          "precision": 0.919,
+          "recall": 0.8693,
+          "f1": 0.8935
         },
         "nl": {
-          "tp": 6751,
-          "fp": 722,
-          "fn": 1826,
-          "precision": 0.9034,
-          "recall": 0.7871,
-          "f1": 0.8412
+          "tp": 6739,
+          "fp": 734,
+          "fn": 1838,
+          "precision": 0.9018,
+          "recall": 0.7857,
+          "f1": 0.8398
         }
       },
-      "seconds": 8.0
+      "seconds": 7.9
     }
   }
 }

@@ -1,4 +1,4 @@
-.PHONY: help setup lint format type test coverage rust-check rust-develop parity data train bench-pii bench-compare bench-secrets bench-throughput diagram docker-build docker-up clean all
+.PHONY: help setup lint format type test coverage rust-check rust-develop parity data train bench-pii bench-compare bench-secrets bench-throughput bench-ablation diagram docker-build docker-up clean all
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
@@ -49,6 +49,9 @@ bench-secrets: ## Secrets corpus: this package vs detect-secrets
 
 bench-throughput: ## Throughput in MB/s for every engine
 	uv sync --group validation && uv run --no-sync python benchmarks/throughput.py
+
+bench-ablation: ## Component ablations, score-floor sweep and learning curve on ai4privacy
+	uv run python benchmarks/pii_ablation.py
 
 diagram: ## Render architecture diagram to SVG
 	npx -y @mermaid-js/mermaid-cli -i docs/architecture/architecture.mmd \

@@ -41,11 +41,25 @@ impl Detector {
     pub fn candidates_from(&self, text: &str, from: usize) -> Vec<Finding> {
         let mut found = self.engine.scan_candidates_from(text, from);
         if let Some(model) = &self.model {
-            let structured: Vec<(usize, usize)> = found
+            let mut structured: Vec<(usize, usize)> = found
                 .iter()
                 .filter(|f| self.engine.is_structured(f.rank))
                 .map(|f| (f.start, f.end))
                 .collect();
+            structured.sort_unstable();
+            // Running maximum of the ends: a span overlaps some structured match exactly when
+            // the furthest end among the matches starting before its end lies past its start.
+            let reach: Vec<usize> = structured
+                .iter()
+                .scan(0, |m, &(_, e)| {
+                    *m = (*m).max(e);
+                    Some(*m)
+                })
+                .collect();
+            let overlaps = |s: usize, e: usize| {
+                let k = structured.partition_point(|&(st, _)| st < e);
+                k > 0 && reach[k - 1] > s
+            };
             let byte = char_to_byte(text, from);
             let tagged: Vec<Finding> = model
                 .predict(&text[byte..])
@@ -58,7 +72,7 @@ impl Detector {
                     f.match_end += from;
                     f
                 })
-                .filter(|f| !structured.iter().any(|&(s, e)| s < f.end && f.start < e))
+                .filter(|f| !overlaps(f.start, f.end))
                 .collect();
             found.extend(tagged);
         }
