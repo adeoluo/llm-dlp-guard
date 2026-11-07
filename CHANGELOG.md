@@ -4,7 +4,7 @@ All notable changes to this project are documented here. The file is generated
 from Conventional Commits by [git-cliff](https://git-cliff.org) when a release is cut
 with `make cut-release`.
 
-## Unreleased
+## [0.1.0] 2026-11-07
 
 ### Features
 
@@ -14,6 +14,12 @@ with `make cut-release`.
 - Evaluation benchmarks, docs and ADRs (#4)
 - Scaling benchmarks, intervals, ablations and seeded secrets benchmark (#5)
 
+### Performance
+
+- Throughput scaling curves and median of three timings (#7)
+
 ### Maintenance
 
 - Scaffold project
+- Release tooling, agent notes and a make evaluation target (#6)
+- Build the sdist and wheel as release assets (#8)
