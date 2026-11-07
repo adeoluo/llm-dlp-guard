@@ -41,6 +41,8 @@ def machine() -> dict[str, Any]:
         "processor": chip or platform.processor(),
         "cpus": os.cpu_count(),
         "python": platform.python_version(),
+        # The machine is shared; the load average at write time puts timings in context.
+        "load_average_1m": round(os.getloadavg()[0], 2) if hasattr(os, "getloadavg") else None,
     }
 
 
