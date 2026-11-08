@@ -1,10 +1,22 @@
 cff-version: 1.2.0
-message: "If you use this work, please cite it."
-title: "Llm Dlp Guard"
+message: "If you use this software, please cite it as below."
+type: software
+title: "LLM DLP Guard"
+abstract: "Data loss prevention for LLM traffic: detects and reversibly redacts PII, secrets and credentials in prompts, responses and token streams, with a Rust core"
 authors:
   - family-names: "Ogunnoiki"
     given-names: "Adeolu"
-version: 0.1.0
-date-released: 2026-01-01
+version: "0.1.0"
+date-released: "2026-11-07"
 license: MIT
-url: "REPO_URL"
+repository-code: "https://github.com/adeoluo/llm-dlp-guard"
+url: "https://github.com/adeoluo/llm-dlp-guard"
+keywords:
+  - "data-loss-prevention"
+  - "llm-security"
+  - "named-entity-recognition"
+  - "pii-detection"
+  - "python"
+  - "redaction"
+  - "rust"
+  - "secrets-detection"
