@@ -2,21 +2,9 @@
 
 ## Request path
 
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant P as Proxy (service.py)
-    participant G as Guard (guard.py)
-    participant U as Provider
-    C->>P: POST /v1/chat/completions
-    P->>G: each message part, direction=prompt, new Vault
-    G-->>P: redacted text, or block
-    P->>U: request with tokens and labels
-    U-->>P: answer (JSON or SSE)
-    P->>G: answer text, direction=response, same Vault
-    G-->>P: secrets redacted, tokens restored
-    P-->>C: answer
-```
+<p align="center">
+  <img src="architecture/request-path.svg" alt="Request path diagram" width="776">
+</p>
 
 ## Modules
 
