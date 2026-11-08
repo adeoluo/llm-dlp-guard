@@ -20,3 +20,5 @@ keywords:
   - "redaction"
   - "rust"
   - "secrets-detection"
+  - "mitre-atlas"
+  - "owasp-llm-top-10"
