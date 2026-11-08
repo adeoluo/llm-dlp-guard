@@ -6,8 +6,8 @@ abstract: "Data loss prevention for LLM traffic: detects and reversibly redacts 
 authors:
   - family-names: "Ogunnoiki"
     given-names: "Adeolu"
-version: "0.1.0"
-date-released: "2026-11-07"
+version: "0.1.1"
+date-released: "2026-11-08"
 license: MIT
 repository-code: "https://github.com/adeoluo/llm-dlp-guard"
 url: "https://github.com/adeoluo/llm-dlp-guard"
