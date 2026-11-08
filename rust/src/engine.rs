@@ -5,7 +5,7 @@ use aho_corasick::{AhoCorasick, AhoCorasickBuilder, MatchKind};
 use regex::Regex;
 use serde::Deserialize;
 
-use crate::finding::{bytes_to_chars, char_to_byte, resolve, Finding};
+use crate::finding::{Finding, bytes_to_chars, char_to_byte, resolve};
 use crate::validators;
 
 /// One catalog entry, as serialized by the Python catalog.
@@ -65,10 +65,10 @@ impl Engine {
                 ),
                 None => None,
             };
-            if let Some(v) = &spec.validator {
-                if !validators::VALIDATORS.contains(&v.as_str()) {
-                    return Err(format!("{}: unknown validator {v}", spec.name));
-                }
+            if let Some(v) = &spec.validator
+                && !validators::VALIDATORS.contains(&v.as_str())
+            {
+                return Err(format!("{}: unknown validator {v}", spec.name));
             }
             if !(0.0..=1.0).contains(&spec.score) {
                 return Err(format!("{}: score must be in [0, 1]", spec.name));

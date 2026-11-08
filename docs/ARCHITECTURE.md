@@ -44,7 +44,9 @@ The Rust core works on UTF-8 bytes and converts every offset to code points befo
 so Python slices `text[start:end]` directly. Word characters (for `\b` and the tokenizer) follow
 Rust's Unicode definitions; Python's agree except for combining marks, other numbers (`¼`),
 connector punctuation other than `_`, zero-width joiners, circled Latin letters and code points
-newer than Python's Unicode database.
+assigned in only one of the two Unicode databases: newer than Python's, or added after Unicode
+16.0, the version of the regex crate's tables (Python 3.15 has Unicode 17.0). The parity tests
+leave these out; `scripts/gen_unicode_additions.py` lists the code points added after 16.0.
 
 ## Streaming
 

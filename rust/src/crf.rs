@@ -13,8 +13,8 @@ use std::io::{BufReader, BufWriter, Read, Write};
 use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use crate::finding::{bytes_to_chars, Finding, NER_RANK};
-use crate::tokenize::{is_space, tokenize, windows, WINDOW_CHARS};
+use crate::finding::{Finding, NER_RANK, bytes_to_chars};
+use crate::tokenize::{WINDOW_CHARS, is_space, tokenize, windows};
 
 /// A character-offset span `(start, end, label)`.
 pub type Span = (usize, usize, String);

@@ -17,22 +17,30 @@ from llm_dlp_guard.backend import extension
 from llm_dlp_guard.detector import Detector, Tagger
 
 from .conftest import TAGGER_TEST_LABELS, make_records, requires_rust
+from .unicode_additions import ADDED_AFTER_RUST_REGEX
 
 pytestmark = requires_rust
 
 # Python (str.isalnum, re's \\w) and Rust (char::is_alphanumeric, regex's \\w) agree on which
 # characters are word characters except for combining marks (M*), other numbers such as '¼' (No),
 # connector punctuation other than '_' (Pc), the zero-width joiners and the circled and squared
-# Latin letters (Other_Alphabetic symbols), and on code points newer than Python's Unicode
-# database (Cn to Python). Texts here leave those out; see docs/ARCHITECTURE.md.
+# Latin letters (Other_Alphabetic symbols), and on code points assigned in only one of the two
+# Unicode databases: newer than Python's (Cn to Python), or added after Unicode 16.0, the version
+# of the regex crate's tables (word characters to Python 3.15, which has Unicode 17.0). Texts here
+# leave those out; see docs/ARCHITECTURE.md.
 _OTHER_ALPHABETIC_SYMBOLS = "".join(
     chr(c)
     for r in ((0x24B6, 0x24EA), (0x1F130, 0x1F14A), (0x1F150, 0x1F16A), (0x1F170, 0x1F18A))
     for c in range(*r)
 )
+_NEWER_THAN_RUST_REGEX = "".join(
+    chr(c) for lo, hi in ADDED_AFTER_RUST_REGEX for c in range(lo, hi + 1)
+)
 ALPHABET = st.characters(
     blacklist_categories=("Mn", "Mc", "Me", "No", "Pc", "Cs", "Cn"),
-    blacklist_characters="\x1c\x1d\x1e\x1f\u200c\u200d" + _OTHER_ALPHABETIC_SYMBOLS,
+    blacklist_characters="\x1c\x1d\x1e\x1f\u200c\u200d"
+    + _OTHER_ALPHABETIC_SYMBOLS
+    + _NEWER_THAN_RUST_REGEX,
 )
 
 

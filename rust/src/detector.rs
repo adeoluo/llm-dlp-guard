@@ -6,7 +6,7 @@ use rayon::prelude::*;
 
 use crate::crf::Crf;
 use crate::engine::Engine;
-use crate::finding::{char_to_byte, resolve, Finding};
+use crate::finding::{Finding, char_to_byte, resolve};
 
 pub struct Detector {
     pub engine: Engine,
