@@ -295,6 +295,10 @@ on Python 3.12, 3.13, 3.14 and 3.15, the Rust checks and parity, and a package a
 - **Model card:** [docs/MODEL_CARD.md](docs/MODEL_CARD.md) (the CRF tagger and the system).
 - **Data card:** [docs/DATA_CARD.md](docs/DATA_CARD.md) (ai4privacy, Nemotron-PII, generated secrets).
 - **Threat model:** [docs/THREAT_MODEL.md](docs/THREAT_MODEL.md) (evasion, vault exposure, denial of service).
+- **Standards:** the [threat model](docs/THREAT_MODEL.md#standards-mapping) maps every threat to
+  the OWASP Top 10 for LLM Applications 2026 (mainly LLM02:2026 Sensitive Information
+  Disclosure) and MITRE ATLAS v2026.10 (for example AML.T0136 Exfiltration via AI User
+  Interface and AML.T0055 Unsecured Credentials).
 - All evaluation data is synthetic or generated; no real person's data and no live credential is
   used or committed. Detection is probabilistic and is not a compliance guarantee.
 
