@@ -1,7 +1,7 @@
 [package]
 name = "llm-dlp-guard-rs"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "Rust core of llm-dlp-guard: pattern engine, validators, CRF tagger and the combined detector"
 license = "MIT"
 authors = ["Adeolu Ogunnoiki"]
@@ -18,9 +18,9 @@ default = []
 python = ["dep:pyo3"]
 
 [dependencies]
-pyo3 = { version = "0.30", optional = true, features = ["abi3-py311"] }
+pyo3 = { version = "0.30.1", optional = true, features = ["abi3-py312"] }
 aho-corasick = "1"
-rayon = "1.10"
+rayon = "1.12"
 regex = "1"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"

@@ -1,11 +1,11 @@
 # AGENTS.md
 
-Working notes for coding agents and contributors in **Llm Dlp Guard**. The [README](README.md)
+Working notes for coding agents and contributors in **LLM DLP Guard**. The [README](README.md)
 explains what the project does and why; this file explains how to change it safely.
 
 ## Project
 
-Data loss prevention for LLM traffic: PII, secrets and credentials in prompts and outputs
+Data loss prevention for LLM traffic: finds PII, secrets and credentials in prompts and answers, and blocks, redacts or reversibly tokenizes them, including inside token streams.
 
 ## Layout
 
@@ -67,6 +67,7 @@ Key modules:
 | `make bench-secrets` | Secrets corpus: this package vs detect-secrets |
 | `make bench-throughput` | Throughput in MB/s for every engine |
 | `make bench-ablation` | Component ablations, score-floor sweep and learning curve on ai4privacy |
+| `make evaluation` | Every benchmark behind the README and docs/EVALUATION_REPORT.md |
 | `make diagram` | Render architecture diagram to SVG |
 | `make docker-build` | Build the image |
 | `make docker-up` | Run via docker compose |

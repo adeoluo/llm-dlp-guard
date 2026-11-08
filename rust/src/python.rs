@@ -5,10 +5,10 @@ use std::sync::Arc;
 use pyo3::exceptions::{PyIOError, PyValueError};
 use pyo3::prelude::*;
 
-use crate::crf::{gold_tags as crf_gold_tags, Crf, TrainConfig};
+use crate::crf::{Crf, TrainConfig, gold_tags as crf_gold_tags};
 use crate::detector::Detector;
 use crate::engine::Engine;
-use crate::finding::{bytes_to_chars, Finding};
+use crate::finding::{Finding, bytes_to_chars};
 use crate::tokenize::tokenize as tokenize_bytes;
 use crate::validators;
 

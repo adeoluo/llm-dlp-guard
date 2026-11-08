@@ -1,18 +1,18 @@
-# Llm Dlp Guard
+# LLM DLP Guard
 
-> Data loss prevention for LLM traffic: PII, secrets and credentials in prompts and outputs
+> Data loss prevention for LLM traffic: finds PII, secrets and credentials in prompts and answers, and blocks, redacts or reversibly tokenizes them, including inside token streams.
 
 Languages: Python, Rust. License: MIT. Source: https://github.com/adeoluo/llm-dlp-guard
 
 ## Docs
 
-- [README](https://github.com/adeoluo/llm-dlp-guard/blob/main/README.md): motivation, architecture, results, quickstart, design decisions, evaluation, responsible ai, limitations, roadmap
+- [README](https://github.com/adeoluo/llm-dlp-guard/blob/main/README.md): motivation, architecture, results, quickstart, usage, design decisions, testing, responsible ai, limitations, roadmap
 - [AGENTS.md](https://github.com/adeoluo/llm-dlp-guard/blob/main/AGENTS.md): layout, commands and conventions for changing the code
 - [Architecture diagram](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/architecture/architecture.mmd): Mermaid source of the component diagram
 - [Architecture](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/ARCHITECTURE.md)
 - [Data Card - LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/DATA_CARD.md)
 - [Definition of Done](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/DEFINITION_OF_DONE.md)
-- [Evaluation Report - Llm Dlp Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/EVALUATION_REPORT.md)
+- [Evaluation Report: LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/EVALUATION_REPORT.md)
 - [Model / System Card - LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/MODEL_CARD.md)
 - [Threat Model - LLM DLP Guard](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/THREAT_MODEL.md)
 - [ADR-0001: Record architecture decisions](https://github.com/adeoluo/llm-dlp-guard/blob/main/docs/adr/0001-record-architecture-decisions.md)

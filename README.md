@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://github.com/adeoluo/llm-dlp-guard/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/adeoluo/llm-dlp-guard/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://github.com/adeoluo/llm-dlp-guard/releases"><img alt="Release" src="https://img.shields.io/github/v/release/adeoluo/llm-dlp-guard"></a>
-  <img alt="Python" src="https://img.shields.io/badge/python-3.11%20%7C%203.12-blue">
+  <img alt="Python" src="https://img.shields.io/badge/python-3.12%20%7C%203.13%20%7C%203.14%20%7C%203.15-blue">
   <img alt="Rust" src="https://img.shields.io/badge/rust-stable-orange">
   <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-green"></a>
 </p>
@@ -147,7 +147,7 @@ because this mix includes the long secret strings. Peak memory 496 MB.
 
 ## Quickstart
 
-Requires Python 3.11 or 3.12, [uv](https://docs.astral.sh/uv/) and a Rust toolchain (the core
+Requires Python 3.12 or newer (tested on 3.12 to 3.15), [uv](https://docs.astral.sh/uv/) and a Rust toolchain (the core
 compiles during install; prebuilt wheels for macOS arm64 are attached to the
 [releases](https://github.com/adeoluo/llm-dlp-guard/releases)).
 
@@ -288,7 +288,7 @@ negative log-likelihood (also checked against brute force on tiny lattices); pos
 negative cases for every pattern, overlap resolution, deterministic training; and integration
 of the CLI, the HTTP service and the proxy against the local echo model, including SSE streams
 and oversized bodies. CI runs lint, mypy and tests
-on Python 3.11 and 3.12, the Rust checks and parity, and a package and image build.
+on Python 3.12, 3.13, 3.14 and 3.15, the Rust checks and parity, and a package and image build.
 
 ## Responsible AI
 
