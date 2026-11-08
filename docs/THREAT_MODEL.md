@@ -33,6 +33,32 @@
 | Provider credential exposure | The proxy forwards `Authorization` | Key theft if the proxy is exposed | Binds to 127.0.0.1 by default; no authentication of its own, so deploy behind an authenticating gateway |
 | Supply chain | Malicious dependency | Code execution | Dependencies pinned in `uv.lock`; CodeQL for Python and Rust in CI |
 
+## Standards mapping
+
+Each threat is mapped to the OWASP Top 10 for LLM Applications 2026 and MITRE ATLAS v2026.10
+(IDs and names checked against `ATLAS.yaml` from the
+[v2026.10 release of mitre-atlas/atlas-data](https://github.com/mitre-atlas/atlas-data/releases)).
+The OWASP Top 10 for Agentic Applications 2026 is not mapped: the guard inspects model traffic
+and has no view of agent tools, memory or identity.
+
+| Threat | OWASP LLM 2026 | MITRE ATLAS v2026.10 | Role of this project |
+|---|---|---|---|
+| Sensitive data sent to a provider | LLM02:2026 Sensitive Information Disclosure | AML.T0085.002 Data from AI Services: Conversation Context and Memory; AML.T0055 Unsecured Credentials | Mitigates: detection, then redaction, tokenization or blocking before forwarding |
+| Answers that repeat or generate sensitive data | LLM02:2026 Sensitive Information Disclosure | AML.T0136 Exfiltration via AI User Interface; AML.T0137.003 Training Data Information from AI Models: Extract Memorized Data | Mitigates: the same detectors run on the response path |
+| Secret split across stream chunks | LLM02:2026 Sensitive Information Disclosure | AML.T0136 Exfiltration via AI User Interface | Mitigates: hold-back window, property tested against whole-text redaction |
+| Injected instructions that steer the model to leak context | LLM01:2026 Prompt Injection; LLM02:2026 Sensitive Information Disclosure | AML.T0051.001 LLM Prompt Injection: Indirect | Partly: leaked values are redacted on the way out; the injection itself is not detected |
+| Evasion by formatting or encoding | LLM02:2026 Sensitive Information Disclosure | AML.T0123 Obfuscated Files or Information | Partly: separators are handled, encoded values are not |
+| Vault token restoration abuse | LLM01:2026 Prompt Injection; LLM02:2026 Sensitive Information Disclosure | AML.T0051.000 LLM Prompt Injection: Direct | Mitigates: per-request vaults and exact whole-token restoration |
+| Logging of sensitive data | LLM02:2026 Sensitive Information Disclosure | AML.T0055 Unsecured Credentials | Mitigates: the service logs no request content |
+| Denial of service | LLM06:2026 Unbounded Consumption | AML.T0029 Denial of AI Service | Mitigates with a body cap and linear-time regex (AML.M0036 Limit AI Workload Resource Consumption) |
+| Provider credential exposure | LLM02:2026 Sensitive Information Disclosure | AML.T0055 Unsecured Credentials; AML.T0132 Misconfigured or Publicly Exposed AI Services | Partly: binds to 127.0.0.1; authentication is left to a gateway in front |
+| Malicious dependency | LLM04:2026 Supply Chain | AML.T0010.001 Supply Chain Compromise: Software | Mitigates with a lockfile and CodeQL (AML.M0016 Vulnerability Scanning) |
+
+The guard as a whole is an instance of AML.M0020 Generative AI Guardrails on both directions of
+traffic. Policy misconfiguration has no ATLAS technique; it is covered by strict policy loading.
+In NIST AI 600-1 (Generative AI Profile) terms the project addresses the Data Privacy and
+Information Security risks.
+
 ## Residual risk
 
 Detection is probabilistic. The tagger misses names and addresses it has not seen in similar
