@@ -55,10 +55,10 @@ bench-ablation: ## Component ablations, score-floor sweep and learning curve on 
 
 evaluation: train bench-ablation bench-compare bench-secrets bench-throughput ## Every benchmark behind the README and docs/EVALUATION_REPORT.md
 
-diagram: ## Render architecture diagram to SVG
-	npx -y @mermaid-js/mermaid-cli -i docs/architecture/architecture.mmd \
-	     -o docs/architecture/architecture.svg \
-	     -c mermaid.config.json -b transparent
+diagram: ## Render every diagram in docs/architecture to SVG (house theme, white background)
+	@for f in docs/architecture/*.mmd; do \
+		npx -y @mermaid-js/mermaid-cli -q -i "$$f" -o "$${f%.mmd}.svg" -c mermaid.config.json -b white || exit 1; \
+	done
 
 docker-build: ## Build the image
 	docker build -t llm-dlp-guard .
