@@ -8,7 +8,7 @@ from llm_dlp_guard.policy import Policy, Rule
 from llm_dlp_guard.streaming import SSEStream, StreamRedactor, redact_stream
 from llm_dlp_guard.vault import Vault
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 __all__ = [
     "Catalog",
