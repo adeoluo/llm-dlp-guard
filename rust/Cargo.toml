@@ -1,6 +1,6 @@
 [package]
 name = "llm-dlp-guard-rs"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Rust core of llm-dlp-guard: pattern engine, validators, CRF tagger and the combined detector"
 license = "MIT"
